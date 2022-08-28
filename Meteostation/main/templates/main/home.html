@@ -1,12 +1,157 @@
 {% extends 'main/layout.html' %}
 
 <!--{% block title %}Home{% endblock %}-->
+{% load static %}
 
 {% block head %}
     <title>Home</title>
+    <style>
+        .main {
+            padding: 90px 30px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /*padding: 0;*/
+            gap: 12px;
+        }
+
+        .main .content {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+            gap: 30px;
+
+            max-width: 1280px;
+            width: 100%;
+            height: 300px;
+
+            background: linear-gradient(180deg, #ECE4D9 0%, #6384A2 100%);
+            border-radius: 20px;
+        }
+
+        .main .content .image {
+            max-width: 200px;
+            object-fit: contain;
+        }
+
+        .main .content .column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            /*gap: 20px;*/
+
+            /*width: 950px;*/
+            /*height: 200px;*/
+            align-self: stretch;
+        }
+
+        .main .content .column h1 {
+            font-weight: 700;
+            font-size: 32px;
+            /*line-height: 42px;*/
+            /* identical to box height */
+            color: #FFFFFF;
+        }
+
+        .main .content .column p {
+            margin-top: 10px;
+            font-weight: 400;
+            font-size: 14px;
+            /*line-height: 21px;*/
+            /*letter-spacing: -0.1em;*/
+
+            color: #FFFFFF;
+            align-self: stretch;
+        }
+
+        .main .content .column .button {
+            margin-top: auto/*20px*/;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            padding: 10px;
+            gap: 15px;
+
+            max-width: 108px;
+            max-height: 44px;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+
+            background: #314C6F;
+            border-radius: 10px;
+        }
+
+        .main .content .column .button p {
+            margin: 0;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            /*line-height: 24px;*/
+            /* identical to box height */
+            /*letter-spacing: -0.1em;*/
+            color: #FFFFFF;
+        }
+
+        .main .content .column .button img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+        }
+
+        .main .select {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            gap: 10px;
+        }
+
+        .main .select svg {
+            cursor: pointer;
+            object-fit: contain;
+            width: 20px;
+            height: 20px;
+            border-radius: 24px;
+            background: #6384A2;
+        }
+
+        .main .select svg.active {
+            transition: 0.3s linear;
+            width: 24px;
+            height: 24px;
+            background: #1F3C5C;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-    <h1>Home</h1>
-    <p>Home page</p>
+    <!--<h1>Home</h1>
+    <p>Home page</p>-->
+    <div class="main">
+        <div class="content">
+            <img class="image" src="{% static 'main/img/logo.svg' %}" alt="">
+            <div class="column">
+                <h1>Insight Weather</h1>
+                <p>Learn more about Insight Weather project<br>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aut, cupiditate debitis dolores enim
+                    id necessitatibus nemo quia quis velit!</p>
+                <a class="button" href="#">
+                    <p>Details</p>
+                    <img src="{% static 'main/img/link.png' %}" alt="">
+                </a>
+            </div>
+        </div>
+        <div class="select">
+            <svg class="active"></svg>
+            <svg></svg>
+            <svg></svg>
+        </div>
+    </div>
+    {{ objects }}
 {% endblock %}

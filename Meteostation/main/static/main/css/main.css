@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&display=swap');
+
+/*p, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}*/
 *,
 *::after,
 *::before {
@@ -5,10 +10,13 @@
   padding: 0;
   box-sizing: border-box;
   /*font-family: 'Jost', sans-serif;*/
+  font-family: 'Chakra Petch', sans-serif;
+  font-style: normal;
 }
 
 body, html {
   /*background: #F8F8F7;*/
+  background: #F9F4E8;
   height: 100%;
   width: 100%;
   min-height: 100vh;
@@ -24,4 +32,161 @@ button {
 
 a {
   text-decoration: none;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 80px;
+  gap: 5px;
+
+  position: absolute;
+  height: 50px;
+  left: 0;
+  right: 0;
+  top: 0;
+
+  background: #314C6F;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+nav + * {
+  margin-top: 70px;
+}
+
+nav .item {
+  user-select: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+nav .item img {
+  width: 34px;
+  /*height: 34px;*/
+  object-fit: contain;
+}
+
+nav .item span {
+  font-weight: 700;
+  font-size: 20px;
+  /*line-height: 26px;*/
+  /* identical to box height */
+  color: #FFFFFF;
+}
+
+nav .menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 30px;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px 80px;
+  gap: 30px;
+  position: absolute;
+  height: 140px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  border-top: 1px solid rgba(78, 78, 78, 0.29);
+}
+
+footer .column {
+  min-width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+footer .column:first-child {
+  align-items: flex-start;
+}
+
+footer .column:last-child {
+  align-items: flex-end;
+}
+
+footer .column h6 {
+  font-weight: 700;
+  font-size: 18px;
+  color: #000000;
+}
+
+footer .column .grid {
+  width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-columns: 1fr;
+  gap: 10px;
+  /*grid-column-gap: 20px;
+  grid-row-gap: 10px;*/
+}
+
+footer .column .grid .icon {
+  transition: 0.3s linear;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+
+  background: #ECE4D9;
+  border-radius: 10px;
+}
+
+footer .column .grid .icon:hover svg {
+  transition: 0.3s linear;
+  fill: #FFFFFF;
+}
+
+footer .column .grid .icon:hover path {
+  transition: 0.3s linear;
+  fill: #FFFFFF;
+}
+
+footer .column select {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  outline-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  background: #ECE4D9 url(../img/arrowdown.svg) calc(100% - 10px) no-repeat;
+  border-radius: 10px;
+  height: 100%;
+  width: calc(100% + 30px);
+  min-width: fit-content;
+}
+
+footer .column .grid .icon.facebook:hover {
+  transition: 0.3s linear;
+  background: darkblue;
+}
+
+footer .column .grid .icon.linkedin:hover {
+  transition: 0.3s linear;
+  background: cornflowerblue;
+}
+
+footer .column .grid .icon.telegram:hover {
+  transition: 0.3s linear;
+  background: dodgerblue;
 }
