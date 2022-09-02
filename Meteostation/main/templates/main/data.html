@@ -227,14 +227,39 @@ function popUp(bool=false) {
       <p>Upload a <span>.xslx file</span> or a <span>directory</span> with such files.</p>
     </article>
 
-    <form class="image">
-      <label class="file" enctype="multipart/form-data">
+    <form id="form" class="image" enctype="multipart/form-data" method="POST">
+      <label class="file">
         {% csrf_token %}
-        <input type="file" webkitdirectory directory multiple name="upload" style="display: contents;"/><!--  accept=".xlsx, .csv, .txt"-->
+        <input id="file" type="file" name="upload" accept=".xlsx, .csv, .txt" directory multiple style="display: contents;"/><!--  accept=".xlsx, .csv, .txt" webkitdirectory -->
         <p><span>Drag here</span> your file or <span>Click here</span> to upload</p>
       </label>
-      <p>No file selected</p>
+      <p id="label">No file selected</p>
+    <button type="submit" style="display: none; align-self: center" id="submit" class="button"><span>UPLOAD</span></button>
     </form>
   </div>
 </div>
+<script>
+
+let text = "No file selected";
+let file = document.getElementById("file");
+file.onchange = function() {
+    let label = document.getElementById("label");
+    let submit = document.getElementById("submit");
+    if (this.files.length > 0) {
+        label.innerHTML = "File names:&nbsp;";
+        for (let i = 0; i < this.files.length; i++) {
+            label.innerHTML += `${this.files[i].name}`;
+            if (this.files.length - i - 1 > 0) {
+                label.innerHTML += ";&nbsp;&nbsp;"
+            }
+        }
+        submit.style.display = "flex";
+    } else {
+        label.innerHTML = text;
+    }
+    // label.innerText =
+    // document.getElementById("form")
+    // label.innerText = ""
+};
+</script>
 {% endblock %}
