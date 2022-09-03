@@ -26,7 +26,7 @@ class Data(models.Model):
     velocity = models.IntegerField('Середня швидкість вітру', validators=[MinValueValidator(0)])
     weather_code = models.CharField('Код погоди', max_length=20, default="CL")
     # weather_code = models.ForeignKey(WeatherCode, on_delete=models.CASCADE)
-    cloud_amount = models.IntegerField('Кількість хмар', validators=[
+    cloud_amount = models.IntegerField('Кількість хмар', null=True, validators=[
         MaxValueValidator(10),
         MinValueValidator(0)
     ])
@@ -36,7 +36,7 @@ class Data(models.Model):
         MinValueValidator(0)
     ])
     atmo_pressure = models.IntegerField('Атмосферний тиск', validators=[MinValueValidator(0)])
-    lower_cloud_limit = models.IntegerField('Нижня межа хмарності')
+    lower_cloud_limit = models.IntegerField('Нижня межа хмарності', null=True)
 
     def __str__(self):
         return str(self.date)

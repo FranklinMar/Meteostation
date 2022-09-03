@@ -189,6 +189,34 @@
     width: 100%;
     color: #8C8C8C;
 }
+
+.lds-dual-ring {
+    margin: 0 auto;
+    display: none;
+    /*display: inline-block;*/
+    width: 80px;
+    height: 80px;
+}
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #314C6F;
+    border-color: #314C6F transparent #314C6F transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
@@ -201,6 +229,11 @@ function popUp(bool=false) {
 }
 // popUp();
     </script>
+{% if message %}
+<script>
+    alert("{{ message }}")
+</script>
+{% endif %}
 {% endblock %}
 
 {% block body %}
@@ -235,6 +268,7 @@ function popUp(bool=false) {
       </label>
       <p id="label">No file selected</p>
     <button type="submit" style="display: none; align-self: center" id="submit" class="button"><span>UPLOAD</span></button>
+    <div class="lds-dual-ring"></div>
     </form>
   </div>
 </div>
@@ -242,11 +276,12 @@ function popUp(bool=false) {
 
 let text = "No file selected";
 let file = document.getElementById("file");
+let submit = document.getElementById("submit");
 file.onchange = function() {
     let label = document.getElementById("label");
-    let submit = document.getElementById("submit");
+
     if (this.files.length > 0) {
-        label.innerHTML = "File names:&nbsp;";
+        label.innerHTML = `File name${ this.files.length > 1 ? "s" : "" }:&nbsp;`;
         for (let i = 0; i < this.files.length; i++) {
             label.innerHTML += `${this.files[i].name}`;
             if (this.files.length - i - 1 > 0) {
@@ -260,6 +295,10 @@ file.onchange = function() {
     // label.innerText =
     // document.getElementById("form")
     // label.innerText = ""
+};
+submit.onclick = function() {
+   $('#submit').fadeOut();
+   $('.lds-dual-ring').fadeIn().style.display = "inline-block";
 };
 </script>
 {% endblock %}
