@@ -1,16 +1,21 @@
 {% extends 'main/layout.html' %}
 {% load static %}
+{% load poll_extras %}
 
 {% block head %}
     <title>Data</title>
     <style>
+body {
+    padding: 0 80px;
+}
 .button {
     /*margin-top: ;*/
     /*margin: 60px auto 0 auto;*/
     cursor: pointer;
+    width: 100%;
     /*margin: 60px 80px 0 80px;*/
-    margin-left: 80px;
-    margin-right: 80px;
+    /*margin-left: 80px;*/
+    /*margin-right: 80px;*/
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -19,7 +24,7 @@
     background: #FFFFFF;
     justify-content: center;
     /*max-width: 1280px;*/
-    width: calc(100% - 160px);
+    /*width: calc(100% - 160px);*/
     min-width: fit-content;
 }
 
@@ -217,6 +222,105 @@
         transform: rotate(360deg);
     }
 }
+
+.card {
+    margin-top: 50px;
+    padding: 20px;
+    background: #FFFFFF;
+    border-radius: 45px;
+    width: 100%;
+}
+
+.table {
+    overflow-x: auto;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    /*border: inherit;*/
+    /*border: inherit;*/
+    border: 1px solid #e3e6f0;
+    border-collapse: separate !important;
+}
+
+thead tr th {
+    /*padding: 10px 10px;*/
+    padding: 20px 5px;
+    display: table-cell;
+    cursor: pointer;
+    font-weight: bold;
+    border: inherit;
+    font-size: 18px;
+    color: #FFFFFF;
+    background-color: #6384A2;
+    /*border-width: 3px;*/
+}
+
+tr {
+    /*padding: 5px 10px;*/
+    display: table-row;
+    vertical-align: inherit;
+    border: inherit;
+}
+
+thead tr:first-child th:first-child {
+    border-top-left-radius: 25px;
+}
+
+thead tr:first-child th:last-child {
+    border-top-right-radius: 25px;
+}
+
+thead th:hover {
+    transition: 0.1s linear;
+    outline: 1px solid darkblue/*#314C6F*/;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    /*border: inherit;*/
+    border: 1px solid #e3e6f0;
+    border-collapse: separate !important;
+}
+
+tbody tr:nth-child(even) {
+    background: #F9F4E8;
+}
+
+tbody tr:hover {
+    transition: 0.1s linear;
+    outline: 1px solid darkblue/*#314C6F*/;
+}
+
+tbody tr:last-child {
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 25px;
+    /*padding-left: 10px;*/
+}
+
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 25px;
+    /*padding-right: 10px;*/
+}
+
+td {
+    border: inherit;
+    display: table-cell;
+    /*padding: 5px;*/
+    padding: 10px 5px;
+    width: fit-content;
+}
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
@@ -246,6 +350,64 @@ function popUp(bool=false) {
     <span>
         UPLOAD
     </span>
+</div>
+<div class="card">
+    <div class="table">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>Date<i class="fa-solid fa-arrow-up"></i></th>
+                    <th>Temperature (°C)</th>
+                    <th>Wind direction</th>
+                    <th>Average wind speed (m/s)</th>
+                    <th>Weather events</th>
+<!--                  <th>Cloudiness</th>-->
+                    <th>Cloud cover</th>
+                    <th>Vision range (km)</th>
+                    <th>Humidity (%)</th>
+                    <th>Atmospheric pressure (GPa)</th>
+                    <th>Minimal cloud height (m)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if data %}
+                {% for item in data %}
+                <tr>
+                    <td>{{ item.date|date:"d M Y H:i" }}</td>
+                    <td>{{ item.temperature }}</td>
+                    <td>{{ item.direction }}</td>
+                    <td>{{ item.velocity }}</td>
+                    <td>{{ codes|modify:item.weather_code }}</td>
+                        {% comment %}{% with variable=item.weather_code %}
+                            {% for key, value in codes.items %}
+                                {% with what_to=key|add:"|"|add:value %}
+{#                                    >{{ variable }}<#}
+                                    {% variable=variable|replace:what_to %}
+                                {% endwith %}
+                            {% endfor %}
+                            {{ variable }}
+                        {% endwith %}{% endcomment %}
+                    <td>{{ dictionary|get_value:item.cloud_amount }}</td>
+                    <td>{{ item.visibility_range }}</td>
+                    <td>{{ item.humidity }}</td>
+                    <td>{{ item.atmo_pressure }}</td>
+                    <td>{{ item.lower_cloud_limit }}</td>
+                    <!--<td>Date</td>
+                    <td>Temperature</td>
+                    <td>Wind direction</td>
+                    <td>Average wind speed</td>
+                    <td>Weather code</td>
+                    <td>Cloudiness</td>
+                    <td>Vision range</td>
+                    <td>Humidity</td>
+                    <td>Atmospheric pressure</td>
+                    <td>Minimal cloud height</td>-->
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
 </div>
 <div id="fade">
   <div id="popup">
@@ -297,8 +459,9 @@ file.onchange = function() {
     // label.innerText = ""
 };
 submit.onclick = function() {
-   $('#submit').fadeOut();
-   $('.lds-dual-ring').fadeIn().style.display = "inline-block";
+    this.disabled = "disabled";
+    $('#submit').fadeOut();
+    $('.lds-dual-ring').fadeIn().style.display = "inline-block";
 };
 </script>
 {% endblock %}
