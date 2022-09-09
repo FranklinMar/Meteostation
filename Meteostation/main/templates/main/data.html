@@ -6,13 +6,23 @@
     <title>Data</title>
     <style>
 body {
-    padding: 0 80px;
+    {#padding: 0 80px;#}
 }
+tbody tr.filler {
+    display: table-row;
+}
+
+tbody tr.filler td {
+    text-align: center;
+    color: inherit;
+    width: 100%;
+}
+
 .button {
     /*margin-top: ;*/
     /*margin: 60px auto 0 auto;*/
     cursor: pointer;
-    width: 100%;
+    width: available;
     /*margin: 60px 80px 0 80px;*/
     /*margin-left: 80px;*/
     /*margin-right: 80px;*/
@@ -202,10 +212,11 @@ body {
     width: 80px;
     height: 80px;
 }
+
 .lds-dual-ring:after {
     content: " ";
     display: block;
-    display: block;
+    /*display: block;*/
     width: 64px;
     height: 64px;
     margin: 8px;
@@ -214,6 +225,7 @@ body {
     border-color: #314C6F transparent #314C6F transparent;
     animation: lds-dual-ring 1.2s linear infinite;
 }
+
 @keyframes lds-dual-ring {
     0% {
         transform: rotate(0deg);
@@ -224,20 +236,25 @@ body {
 }
 
 .card {
+    /*margin-left: 80px;
+    margin-right: 80px;*/
     margin-top: 50px;
     padding: 20px;
     background: #FFFFFF;
     border-radius: 45px;
-    width: 100%;
+    width: calc(100% - 160px);
 }
 
 .table {
+    overflow-y: hidden;
     overflow-x: auto;
     width: 100%;
+    height: fit-content;
 }
 
 table {
     width: 100%;
+    {#table-layout: fixed;#}
 }
 
 thead {
@@ -247,6 +264,19 @@ thead {
     /*border: inherit;*/
     border: 1px solid #e3e6f0;
     border-collapse: separate !important;
+}
+
+{% comment %}thead {% endcomment %}tr {
+    min-width: fit-content;
+    /*padding: 5px 10px;*/
+    display: table-row;
+    vertical-align: inherit;
+    border: inherit;
+    width: 100%;
+}
+
+thead tr:first-child {
+    border-radius: 25px 25px 0 0;
 }
 
 thead tr th {
@@ -259,35 +289,36 @@ thead tr th {
     font-size: 18px;
     color: #FFFFFF;
     background-color: #6384A2;
+    min-width: fit-content;
+    width: 10%;
     /*border-width: 3px;*/
 }
 
-tr {
-    /*padding: 5px 10px;*/
-    display: table-row;
-    vertical-align: inherit;
-    border: inherit;
-}
-
 thead tr:first-child th:first-child {
-    border-top-left-radius: 25px;
+    /*border-top-left-radius: 25px;*/
+    border-top-left-radius: inherit;
 }
 
 thead tr:first-child th:last-child {
-    border-top-right-radius: 25px;
+    /*border-top-right-radius: 25px;*/
+    border-top-right-radius: inherit;
 }
 
 thead th:hover {
     transition: 0.1s linear;
-    outline: 1px solid darkblue/*#314C6F*/;
+    outline: 2px solid darkblue/*#314C6F*/;
 }
 
 tbody {
     display: table-row-group;
     vertical-align: middle;
     /*border: inherit;*/
-    border: 1px solid #e3e6f0;
+    border: 2px solid #e3e6f0;
     border-collapse: separate !important;
+}
+
+tbody tr {
+    display: none;
 }
 
 tbody tr:nth-child(even) {
@@ -296,30 +327,146 @@ tbody tr:nth-child(even) {
 
 tbody tr:hover {
     transition: 0.1s linear;
-    outline: 1px solid darkblue/*#314C6F*/;
+    outline: 2px solid darkblue/*#314C6F*/;
 }
 
-tbody tr:last-child {
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+tbody tr.last {
+    border-radius: 0 0 25px 25px;
+    /*border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;*/
 }
 
-tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 25px;
+tbody tr.last td:first-child {
+    border-bottom-left-radius: inherit;
     /*padding-left: 10px;*/
 }
 
-tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 25px;
+tbody tr.last td:last-child {
+    border-bottom-right-radius: inherit;
     /*padding-right: 10px;*/
 }
 
 td {
+    /*word-break: keep-all;
+    word-wrap: break-word;*/
     border: inherit;
     display: table-cell;
     /*padding: 5px;*/
     padding: 10px 5px;
     width: fit-content;
+    {#width: 100%;#}
+}
+
+.margin {
+    margin: 15px 0;
+}
+
+.margin-center {
+    margin-left: 80px;
+    margin-right: 80px;
+}
+
+.label {
+    /*padding: 15px;*/
+    color: #858796;
+    font-size: 18px;
+    height: fit-content;
+}
+
+select {
+    width: fit-content;
+    height: fit-content;
+    padding: 0.375rem 1rem 0.375rem 0.75rem;
+    /*margin: 15px 0;*/
+    color: #6e707e;
+    /*background: #fff url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%235a5c69' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) right 0.75rem center/8px 10px no-repeat;*/
+    border-radius: 5px;
+    font-size: 16px;
+    /*border: 1px solid #858796;*/
+    border: 1px solid #d1d3e2;
+}
+
+select:hover, select:focus {
+    transition: 0.3s linear;
+    outline: 2px solid lightblue;
+}
+
+.flex-row {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: center;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    justify-content: flex-end;
+    border-radius: 0.35rem;
+}
+
+.pagination li {
+    font-size: 1rem;
+    font-weight: 400;
+    /*line-height: 1.5;
+    color: #858796;*/
+    display: list-item;
+    text-align: -webkit-match-parent;
+    position: relative;
+    /*display: block;*/
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #4e73df;
+    /*background-color: #fff;*/
+    border: 1px solid #dddfeb;
+    cursor: pointer;
+    {#user-select: auto;#}
+}
+
+.pagination li.active {
+    z-index: 3;
+    color: #fff;
+    background-color: #4e73df;
+    border-color: #4e73df;
+    pointer-events: none;
+    cursor: pointer;
+}
+
+.pagination li.disabled {
+    color: #858796;
+    pointer-events: none;
+    cursor: auto;
+    /*background-color: #fff;
+    border-color: #dddfeb;*/
+}
+
+.pagination li:first-child {
+    margin-left: 0;
+    border-radius: 0.35rem 0 0 0.35rem;
+}
+
+.pagination li:last-child {
+    border-radius: 0 0.35rem 0.35rem 0;
+}
+
+.pagination li:hover {
+    transition: 0.2s linear;
+    background: #e5e6ea;
+}
+
+.pagination li:focus {
+    transition: 0.3s linear;
+    outline: 2px solid lightblue;
+}
+
+.invisible {
+    display: contents;
+}
+
+.invisible li:first-child, .invisible li:last-child {
+    border-radius: 0;
 }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -333,25 +480,32 @@ function popUp(bool=false) {
 }
 // popUp();
     </script>
-{% if message %}
-<script>
-    alert("{{ message }}")
-</script>
-{% endif %}
 {% endblock %}
 
 {% block body %}
 
-<div class="button" id="upload" onclick="popUp(true);">
+<div class="button margin-center" id="upload" onclick="popUp(true);">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
         <path fill="#1F3C5C" fill-rule="evenodd" d="m7.866 0 4.37 4.033-.823.892-2.924-2.7v10.137H7.276V2.305L4.673
-        4.908l-.857-.858L7.866 0ZM1.213 14.787V7.511H0V16h15.766V7.51h-1.213v7.277H1.213Z" clip-rule="evenodd"/>
+        4.908l-.857-.858L7.866 0ZM1.213 14.787V7.511H0V16h15.766V7.51h-1.213v7.277H1.213Z" clip-rule="evenodd"></path>
     </svg>
     <span>
         UPLOAD
     </span>
 </div>
-<div class="card">
+<div class="card margin-center">
+    <div class="flex-row margin">
+        <span class="label">
+            Show
+            <select id="entries">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            entries
+        </span>
+    </div>
     <div class="table">
         <table id="dataTable">
             <thead>
@@ -365,7 +519,8 @@ function popUp(bool=false) {
                     <th>Cloud cover</th>
                     <th>Vision range (km)</th>
                     <th>Humidity (%)</th>
-                    <th>Atmospheric pressure (GPa)</th>
+                    <th>Atmo pressure (GPa)</th>
+{#                    <th>Atmospheric pressure (GPa)</th>#}
                     <th>Minimal cloud height (m)</th>
                 </tr>
             </thead>
@@ -378,35 +533,42 @@ function popUp(bool=false) {
                     <td>{{ item.direction }}</td>
                     <td>{{ item.velocity }}</td>
                     <td>{{ codes|modify:item.weather_code }}</td>
-                        {% comment %}{% with variable=item.weather_code %}
-                            {% for key, value in codes.items %}
-                                {% with what_to=key|add:"|"|add:value %}
-{#                                    >{{ variable }}<#}
-                                    {% variable=variable|replace:what_to %}
-                                {% endwith %}
-                            {% endfor %}
-                            {{ variable }}
-                        {% endwith %}{% endcomment %}
                     <td>{{ dictionary|get_value:item.cloud_amount }}</td>
                     <td>{{ item.visibility_range }}</td>
                     <td>{{ item.humidity }}</td>
                     <td>{{ item.atmo_pressure }}</td>
                     <td>{{ item.lower_cloud_limit }}</td>
-                    <!--<td>Date</td>
-                    <td>Temperature</td>
-                    <td>Wind direction</td>
-                    <td>Average wind speed</td>
-                    <td>Weather code</td>
-                    <td>Cloudiness</td>
-                    <td>Vision range</td>
-                    <td>Humidity</td>
-                    <td>Atmospheric pressure</td>
-                    <td>Minimal cloud height</td>-->
                 </tr>
                 {% endfor %}
                 {% endif %}
             </tbody>
         </table>
+    </div>
+<!--    <label>Showing <span id="from">1</span> to <span id="to">10</span> of <span id="entries">n</span> entries <span id="filter"></span></label>-->
+    <div class="margin flex-row">
+        <span class="label" id="show">Showing 0 to 0 of 0 entries </span>
+        <ul class="pagination" id="paginator">
+            <li class="disabled" id="prev">Previous</li>
+            <!--<li class="disabled" data-id="0">Previous</li>-->
+            <!--<li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li class="disabled">...</li>
+            <li>12</li>-->
+            <!--<li data-id="8">Next</li>-->
+            <span class="invisible" id="paginator-buttons">
+                {% comment %}<li data-id="1">1</li>
+                <li data-id="2">2</li>
+                <li data-id="3">3</li>
+                <li data-id="4">4</li>
+                <li data-id="5">5</li>
+                <li data-id="6">6</li>
+                <li data-id="7">7</li>{% endcomment %}
+            </span>
+            <li id="next">Next</li>
+        </ul>
     </div>
 </div>
 <div id="fade">
@@ -414,7 +576,7 @@ function popUp(bool=false) {
     <div class="button" onclick="popUp();">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18">
         <path fill="#1f3c5c" fill-rule="evenodd" d="M8.057 9 .53 1.471 1.47.53 9 8.057 16.529.53l.942.942L9.943 9l7.528
-        7.529-.942.942L9 9.943 1.471 17.47l-.941-.94L8.057 9Z" clip-rule="evenodd"/>
+        7.529-.942.942L9 9.943 1.471 17.47l-.941-.94L8.057 9Z" clip-rule="evenodd"></path>
       </svg>
     </div>
     <article>
@@ -439,6 +601,18 @@ function popUp(bool=false) {
 let text = "No file selected";
 let file = document.getElementById("file");
 let submit = document.getElementById("submit");
+let entries = document.getElementById("entries");
+let show = document.getElementById("show");
+
+let data_table = document.getElementById("dataTable");
+
+let paginator = document.getElementById("paginator");
+let paginator_buttons = document.getElementById("paginator-buttons");
+let prev = document.getElementById("prev");
+let next = document.getElementById("next");
+
+{#let rows = document.querySelectorAll("tbody tr");#}
+
 file.onchange = function() {
     let label = document.getElementById("label");
 
@@ -458,10 +632,234 @@ file.onchange = function() {
     // document.getElementById("form")
     // label.innerText = ""
 };
+
+show.change_show = function (from, to, entries, filter=null) {
+    this.innerText = `Showing ${from} to ${to} of ${entries} entries ${filter == null ? "" : filter}`;
+}
+
 submit.onclick = function() {
     this.disabled = "disabled";
     $('#submit').fadeOut();
     $('.lds-dual-ring').fadeIn().style.display = "inline-block";
 };
+//let prev_page = 0
+let page = 0;
+let entry_num = 10;
+let rows_tr = null;
+
+//$("tbody tr").fadeOut(0);
+//let rows = document.querySelector("tbody tr");
+//for (let i of rows) {
+//    i.style.display = "none";
+//}
+
+function hideRows() {
+    {#let rows = document.querySelectorAll("tbody tr:not([class]) ");#}
+    let rows = document.querySelectorAll("tbody tr:not(.filler) ");
+
+    for (let i = page * entry_num; i < Math.min((page + 1) * entry_num, rows.length); i++) {
+        rows[i].removeAttribute("style");
+    }
+    {#console.log();#}
+    let last = document.querySelector("tbody .last")
+    if (last) {
+        last.classList.remove("last");
+    }
+}
+
+function check(rows) {
+    {#let rows = document.querySelectorAll("tbody tr");#}
+    if (rows.length === 0) {
+        let row = document.createElement("tr");
+        data_table.getElementsByTagName('tbody')[0].appendChild(row);
+        row.classList.add("filler");
+        row.innerHTML = `<td colspan='${data_table.getElementsByTagName("th").length}'>No data available in table</td>`;
+        return false;
+    }
+    return true;
+}
+
+function revealRows(rows) {
+    {#let rows = document.querySelectorAll("tbody tr");#}
+    if (rows.length !== 0) {
+        {#for (let i = 0; i < Math.min(entry_num, rows.length); i++) {#}
+        for (let i = page * entry_num; i < Math.min((page + 1) * entry_num, rows.length); i++) {
+            rows[i].style.display = "table-row";
+        }
+        rows[Math.min((page + 1) * entry_num, rows.length) - 1].classList.add("last");
+        {#rows = document.querySelectorAll("tbody tr:not([class]) ");#}
+        rows = document.querySelectorAll("tbody tr:not(.filler) ");
+
+        show.change_show((rows.length) === 0 ? 0 : (page * entry_num) + 1, Math.min((page + 1) * entry_num, rows.length), rows.length);
+    }
+}
+
+function changePaginatorButtons(rows) {
+    let array = paginator_buttons.querySelectorAll("li");
+    let last_page = Math.ceil(rows.length / entry_num);
+    {#console.log(last_page);#}
+    for (let i of array) {
+        i.removeAttribute("class");
+    }
+    if (last_page > 7) {
+        if (page < 4) {
+            for (let i = 1; i <= 7 - 2; i++) {
+                array[i - 1].innerText = i.toString();
+                if (page === i - 1) {
+                    array[i - 1].classList.add("active");
+                }
+            }
+            {#array.find((element) => page === Number(element['data-id']))#}
+
+            array[5].innerText = "...";
+            array[5].classList.add("disabled");
+        } else if (page > (last_page - 5)) {
+
+            for (let i = last_page - 4, j = 2; j < 7; i++, j++) {
+                array[j].innerText = i.toString();
+                if (page === (i - 1)) {
+                    array[j].classList.add("active");
+                }
+            }
+            array[1].innerText = "...";
+            array[1].classList.add("disabled");
+        } else {
+            array[1].innerText = "...";
+            array[1].classList.add("disabled");
+            array[5].innerText = "...";
+            array[5].classList.add("disabled");
+
+            array[2].innerText = page.toString();
+            array[3].innerText = (page + 1).toString();
+            array[3].classList.add("active");
+            array[4].innerText = (page + 2).toString();
+        }
+        {% comment %}for (let i = 1; i <= 7 - 2; i++) {
+            array[i - 1].innerText = i.toString();
+        }{% endcomment %}
+       {% comment %} array[1].innerText = "...";
+        array[1].classList.add("disabled");
+        array[2].innerText = (page - 1).toString();
+        array[3].innerText = page.toString();
+        array[3].classList.add("active");
+        array[4].innerText = (page + 1).toString();
+        array[5].innerText = "...";
+        array[5].classList.add("disabled");{% endcomment %}
+        {#array[6].innerText = last_page.toString();#}
+    } else {
+        for (let i = 1; i <= array.length; i++) {
+            array[i - 1].innerText = i.toString();
+            if (page === (i - 1)) {
+                array[i - 1].classList.add("active");
+            }
+        }
+    }
+
+    if (last_page === 1) {
+        next.classList.add("disabled");
+        prev.classList.add("disabled");
+    } else {
+        if (page !== last_page - 1) {
+            next.classList.remove("disabled");
+        } else {
+            next.classList.add("disabled");
+        }
+
+        if (page !== 0) {
+            prev.classList.remove("disabled");
+        } else {
+            prev.classList.add("disabled");
+        }
+    }
+    {#paginator_buttons.querySelector('li').classList.add("active");#}
+}
+
+function paginateHandler() {
+    let rows = document.querySelectorAll("tbody tr");
+    hideRows();
+    page = Number(this.innerText) - 1;
+    revealRows(rows);
+    changePaginatorButtons(rows);
+}
+
+entries.onchange = function() {
+
+    /*console.log(Math.min((page + 1) * entry_num, rows.length) - 1);
+    if (rows[Math.min((page + 1) * entry_num, rows.length) - 1]) {
+        rows[Math.min((page + 1) * entry_num, rows.length) - 1].classList.remove("last");
+    }*/
+    hideRows();
+    page = 0;
+    entry_num = this.options[this.selectedIndex].value;
+    let rows = document.querySelectorAll("tbody tr");
+    if (check(rows)) {
+        revealRows(rows);
+    }
+
+    //if (Math.ceil(rows.length / entry_num) <= 1) {
+    paginator_buttons.innerHTML = "";
+    if (rows.length / entry_num === 0) {
+        next.classList.add("disabled");
+    } else {
+        let li = null;
+        for (let i = 1; i <= Math.min(Math.ceil(rows.length / entry_num), 7); i++) {
+            li = document.createElement("li");
+            if (i === 1) {
+                li.innerText = i.toString();
+            }
+            {#li['data-id'] = i.toString();#}
+            {#li.innerText = i.toString();#}
+            li.onclick = paginateHandler;
+            paginator_buttons.appendChild(li);
+        }
+        li.innerText = Math.ceil(rows.length / entry_num).toString();
+        changePaginatorButtons(rows);
+    }
+};
+entries.onchange(null);
+
+
+prev.onclick = function() {
+    if (page !== 0) {
+        hideRows()
+        page--;
+        let rows = document.querySelectorAll("tbody tr");
+        revealRows(rows);
+        changePaginatorButtons(rows);
+        {% comment %}next.classList.remove("disabled");
+        if (page === 0) {
+            this.classList.add("disabled");
+        }{% endcomment %}
+    }
+}
+
+next.onclick = function() {
+    let rows = document.querySelectorAll("tbody tr");
+    let upper_limit = Math.ceil(rows.length / entry_num - 1);
+    {#console.log("next worked")#}
+    {#console.log(upper_limit)#}
+    if (page !== upper_limit) {
+        hideRows()
+        page++;
+        revealRows(rows);
+        changePaginatorButtons(rows);
+        {% comment %}prev.classList.remove("disabled");
+        if (page === upper_limit) {
+            this.classList.add("disabled");
+        }{% endcomment %}
+    }
+}
+/*function createPagination() {
+    paginator.innerText = '<li class="disabled" id="prev">Previous</li>';
+
+    paginator.innerText += '<li id="next">Next</li>';
+}*/
+
 </script>
+
+{% if message %}
+<script>
+    alert("{{ message }}")
+</script>
+{% endif %}
 {% endblock %}

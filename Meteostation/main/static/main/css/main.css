@@ -87,21 +87,25 @@ nav .menu {
   gap: 30px;
 }
 
-@media (max-height: 100vh) {
+/*@media (max-height: 100) {
   footer {
-    margin-top: auto;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
   }
-}
+}*/
 
 footer {
-  margin-top: auto;
+  vertical-align: bottom;
+  margin-top: 30px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
   padding: 10px 80px;
   gap: 30px;
-  width: 100vw;
+  /*width: 100vw;*/
   /*position: absolute;*/
   height: 140px;
   /*left: 0;*/
