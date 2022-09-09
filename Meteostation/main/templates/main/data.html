@@ -5,9 +5,9 @@
 {% block head %}
     <title>Data</title>
     <style>
-body {
-    {#padding: 0 80px;#}
-}
+/* body {
+    padding: 0 80px;
+} */
 tbody tr.filler {
     display: table-row;
 }
@@ -254,19 +254,18 @@ tbody tr.filler td {
 
 table {
     width: 100%;
-    {#table-layout: fixed;#}
+    /* table-layout: fixed; */
 }
 
 thead {
     display: table-header-group;
     vertical-align: middle;
     /*border: inherit;*/
-    /*border: inherit;*/
     border: 1px solid #e3e6f0;
     border-collapse: separate !important;
 }
 
-{% comment %}thead {% endcomment %}tr {
+/* thead */ tr {
     min-width: fit-content;
     /*padding: 5px 10px;*/
     display: table-row;
@@ -354,7 +353,7 @@ td {
     /*padding: 5px;*/
     padding: 10px 5px;
     width: fit-content;
-    {#width: 100%;#}
+    /* width: 100%; */
 }
 
 .margin {
@@ -422,7 +421,7 @@ select:hover, select:focus {
     /*background-color: #fff;*/
     border: 1px solid #dddfeb;
     cursor: pointer;
-    {#user-select: auto;#}
+    /* user-select: auto; */
 }
 
 .pagination li.active {
@@ -515,12 +514,12 @@ function popUp(bool=false) {
                     <th>Wind direction</th>
                     <th>Average wind speed (m/s)</th>
                     <th>Weather events</th>
-<!--                  <th>Cloudiness</th>-->
+                    <!--<th>Cloudiness</th>-->
                     <th>Cloud cover</th>
                     <th>Vision range (km)</th>
                     <th>Humidity (%)</th>
                     <th>Atmo pressure (GPa)</th>
-{#                    <th>Atmospheric pressure (GPa)</th>#}
+                    <!--<th>Atmospheric pressure (GPa)</th>-->
                     <th>Minimal cloud height (m)</th>
                 </tr>
             </thead>
@@ -544,28 +543,11 @@ function popUp(bool=false) {
             </tbody>
         </table>
     </div>
-<!--    <label>Showing <span id="from">1</span> to <span id="to">10</span> of <span id="entries">n</span> entries <span id="filter"></span></label>-->
     <div class="margin flex-row">
         <span class="label" id="show">Showing 0 to 0 of 0 entries </span>
         <ul class="pagination" id="paginator">
             <li class="disabled" id="prev">Previous</li>
-            <!--<li class="disabled" data-id="0">Previous</li>-->
-            <!--<li class="active">1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li class="disabled">...</li>
-            <li>12</li>-->
-            <!--<li data-id="8">Next</li>-->
             <span class="invisible" id="paginator-buttons">
-                {% comment %}<li data-id="1">1</li>
-                <li data-id="2">2</li>
-                <li data-id="3">3</li>
-                <li data-id="4">4</li>
-                <li data-id="5">5</li>
-                <li data-id="6">6</li>
-                <li data-id="7">7</li>{% endcomment %}
             </span>
             <li id="next">Next</li>
         </ul>
@@ -611,8 +593,6 @@ let paginator_buttons = document.getElementById("paginator-buttons");
 let prev = document.getElementById("prev");
 let next = document.getElementById("next");
 
-{#let rows = document.querySelectorAll("tbody tr");#}
-
 file.onchange = function() {
     let label = document.getElementById("label");
 
@@ -642,34 +622,26 @@ submit.onclick = function() {
     $('#submit').fadeOut();
     $('.lds-dual-ring').fadeIn().style.display = "inline-block";
 };
-//let prev_page = 0
+
 let page = 0;
 let entry_num = 10;
-let rows_tr = null;
+let rows_tr = document.querySelectorAll("tbody tr");
 
-//$("tbody tr").fadeOut(0);
-//let rows = document.querySelector("tbody tr");
-//for (let i of rows) {
-//    i.style.display = "none";
-//}
 
 function hideRows() {
-    {#let rows = document.querySelectorAll("tbody tr:not([class]) ");#}
     let rows = document.querySelectorAll("tbody tr:not(.filler) ");
 
     for (let i = page * entry_num; i < Math.min((page + 1) * entry_num, rows.length); i++) {
         rows[i].removeAttribute("style");
     }
-    {#console.log();#}
     let last = document.querySelector("tbody .last")
     if (last) {
         last.classList.remove("last");
     }
 }
 
-function check(rows) {
-    {#let rows = document.querySelectorAll("tbody tr");#}
-    if (rows.length === 0) {
+function check() {
+    if (rows_tr.length === 0) {
         let row = document.createElement("tr");
         data_table.getElementsByTagName('tbody')[0].appendChild(row);
         row.classList.add("filler");
@@ -679,25 +651,22 @@ function check(rows) {
     return true;
 }
 
-function revealRows(rows) {
-    {#let rows = document.querySelectorAll("tbody tr");#}
-    if (rows.length !== 0) {
-        {#for (let i = 0; i < Math.min(entry_num, rows.length); i++) {#}
-        for (let i = page * entry_num; i < Math.min((page + 1) * entry_num, rows.length); i++) {
-            rows[i].style.display = "table-row";
+function revealRows() {
+    if (rows_tr.length !== 0) {
+        let rows_num = Math.min((page + 1) * entry_num, rows_tr.length);
+        for (let i = page * entry_num; i < rows_num; i++) {
+            rows_tr[i].style.display = "table-row";
         }
-        rows[Math.min((page + 1) * entry_num, rows.length) - 1].classList.add("last");
-        {#rows = document.querySelectorAll("tbody tr:not([class]) ");#}
-        rows = document.querySelectorAll("tbody tr:not(.filler) ");
+        rows_tr[rows_num - 1].classList.add("last");
+        let rows = document.querySelectorAll("tbody tr:not(.filler) ");
 
         show.change_show((rows.length) === 0 ? 0 : (page * entry_num) + 1, Math.min((page + 1) * entry_num, rows.length), rows.length);
     }
 }
 
-function changePaginatorButtons(rows) {
+function changePaginatorButtons() {
     let array = paginator_buttons.querySelectorAll("li");
-    let last_page = Math.ceil(rows.length / entry_num);
-    {#console.log(last_page);#}
+    let last_page = Math.ceil(rows_tr.length / entry_num);
     for (let i of array) {
         i.removeAttribute("class");
     }
@@ -709,11 +678,10 @@ function changePaginatorButtons(rows) {
                     array[i - 1].classList.add("active");
                 }
             }
-            {#array.find((element) => page === Number(element['data-id']))#}
 
             array[5].innerText = "...";
             array[5].classList.add("disabled");
-        } else if (page > (last_page - 5)) {
+        } else if (page >= (last_page - 4)) {
 
             for (let i = last_page - 4, j = 2; j < 7; i++, j++) {
                 array[j].innerText = i.toString();
@@ -734,18 +702,6 @@ function changePaginatorButtons(rows) {
             array[3].classList.add("active");
             array[4].innerText = (page + 2).toString();
         }
-        {% comment %}for (let i = 1; i <= 7 - 2; i++) {
-            array[i - 1].innerText = i.toString();
-        }{% endcomment %}
-       {% comment %} array[1].innerText = "...";
-        array[1].classList.add("disabled");
-        array[2].innerText = (page - 1).toString();
-        array[3].innerText = page.toString();
-        array[3].classList.add("active");
-        array[4].innerText = (page + 1).toString();
-        array[5].innerText = "...";
-        array[5].classList.add("disabled");{% endcomment %}
-        {#array[6].innerText = last_page.toString();#}
     } else {
         for (let i = 1; i <= array.length; i++) {
             array[i - 1].innerText = i.toString();
@@ -771,49 +727,39 @@ function changePaginatorButtons(rows) {
             prev.classList.add("disabled");
         }
     }
-    {#paginator_buttons.querySelector('li').classList.add("active");#}
 }
 
 function paginateHandler() {
-    let rows = document.querySelectorAll("tbody tr");
     hideRows();
     page = Number(this.innerText) - 1;
-    revealRows(rows);
-    changePaginatorButtons(rows);
+    revealRows();
+    changePaginatorButtons();
 }
 
 entries.onchange = function() {
-
-    /*console.log(Math.min((page + 1) * entry_num, rows.length) - 1);
-    if (rows[Math.min((page + 1) * entry_num, rows.length) - 1]) {
-        rows[Math.min((page + 1) * entry_num, rows.length) - 1].classList.remove("last");
-    }*/
     hideRows();
     page = 0;
     entry_num = this.options[this.selectedIndex].value;
-    let rows = document.querySelectorAll("tbody tr");
-    if (check(rows)) {
-        revealRows(rows);
+    if (check()) {
+        revealRows();
     }
 
-    //if (Math.ceil(rows.length / entry_num) <= 1) {
     paginator_buttons.innerHTML = "";
-    if (rows.length / entry_num === 0) {
+    let buttons_num = rows_tr.length / entry_num;
+    if (buttons_num === 0) {
         next.classList.add("disabled");
     } else {
         let li = null;
-        for (let i = 1; i <= Math.min(Math.ceil(rows.length / entry_num), 7); i++) {
+        for (let i = 1; i <= Math.min(Math.ceil(buttons_num), 7); i++) {
             li = document.createElement("li");
             if (i === 1) {
                 li.innerText = i.toString();
             }
-            {#li['data-id'] = i.toString();#}
-            {#li.innerText = i.toString();#}
             li.onclick = paginateHandler;
             paginator_buttons.appendChild(li);
         }
-        li.innerText = Math.ceil(rows.length / entry_num).toString();
-        changePaginatorButtons(rows);
+        li.innerText = Math.ceil(buttons_num).toString();
+        changePaginatorButtons();
     }
 };
 entries.onchange(null);
@@ -823,37 +769,19 @@ prev.onclick = function() {
     if (page !== 0) {
         hideRows()
         page--;
-        let rows = document.querySelectorAll("tbody tr");
-        revealRows(rows);
-        changePaginatorButtons(rows);
-        {% comment %}next.classList.remove("disabled");
-        if (page === 0) {
-            this.classList.add("disabled");
-        }{% endcomment %}
+        revealRows();
+        changePaginatorButtons();
     }
 }
 
 next.onclick = function() {
-    let rows = document.querySelectorAll("tbody tr");
-    let upper_limit = Math.ceil(rows.length / entry_num - 1);
-    {#console.log("next worked")#}
-    {#console.log(upper_limit)#}
-    if (page !== upper_limit) {
+    if (page !== Math.ceil(rows_tr.length / entry_num - 1)) {
         hideRows()
         page++;
-        revealRows(rows);
-        changePaginatorButtons(rows);
-        {% comment %}prev.classList.remove("disabled");
-        if (page === upper_limit) {
-            this.classList.add("disabled");
-        }{% endcomment %}
+        revealRows();
+        changePaginatorButtons();
     }
 }
-/*function createPagination() {
-    paginator.innerText = '<li class="disabled" id="prev">Previous</li>';
-
-    paginator.innerText += '<li id="next">Next</li>';
-}*/
 
 </script>
 
