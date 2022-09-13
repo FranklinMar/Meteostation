@@ -74,7 +74,7 @@ def data(request):
             filename = Path(i.name).stem
             read_file.apply(create_obj, axis=1, args=(filename,))
         params["message"] = f"File{('s' if len(file) > 1 else '')} successfully uploaded"
-    params["data"] = Data.objects.all()
+    params["data"] = Data.objects.all()  # [0:70]
     params["dictionary"] = {
         0: "Clear",
         1: "Low",

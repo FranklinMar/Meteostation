@@ -8,24 +8,15 @@
 /* body {
     padding: 0 80px;
 } */
-tbody tr.filler {
-    display: table-row;
-}
-
-tbody tr.filler td {
-    text-align: center;
-    color: inherit;
-    width: 100%;
-}
 
 .button {
-    /*margin-top: ;*/
-    /*margin: 60px auto 0 auto;*/
+    /*margin-top: ;
+    margin: 60px auto 0 auto;*/
     cursor: pointer;
     width: available;
-    /*margin: 60px 80px 0 80px;*/
-    /*margin-left: 80px;*/
-    /*margin-right: 80px;*/
+    /*margin: 60px 80px 0 80px;
+    margin-left: 80px;
+    margin-right: 80px;*/
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -33,8 +24,8 @@ tbody tr.filler td {
     padding: 10px;
     background: #FFFFFF;
     justify-content: center;
-    /*max-width: 1280px;*/
-    /*width: calc(100% - 160px);*/
+    /*max-width: 1280px;
+    width: calc(100% - 160px);*/
     min-width: fit-content;
 }
 
@@ -78,8 +69,8 @@ tbody tr.filler td {
     top: 0;
     left: 0;
     width: 100%;
-    /*min-height: calc(100vh + 10px);*/
-    /*height: calc(100% - 50px);*/
+    /*min-height: calc(100vh + 10px);
+    height: calc(100% - 50px);*/
     height: 100%;
     background: rgba(29, 29, 29, 0.6);
     z-index: 2;
@@ -114,23 +105,23 @@ tbody tr.filler td {
     align-self: flex-end;
     margin: 0;
 
-    /*background: #FFFFFF;*/
-    /*border-radius: 10px;*/
+    /*background: #FFFFFF;
+    border-radius: 10px;*/
 }
 
-/*#popup .button:hover {*/
-/*    transition: 0.2s;*/
-/*    background: #6384A2;*/
-/*}*/
+/*#popup .button:hover {
+    transition: 0.2s;
+    background: #6384A2;
+}*/
 
-/*#popup .button:active {*/
-/*    transition: 0.2s;*/
-/*    background: #314C6F;*/
-/*}*/
+/*#popup .button:active {
+    transition: 0.2s;
+    background: #314C6F;
+}*/
 
-/*#popup .button:active path {*/
-/*    fill: #FFFFFF;*/
-/*}*/
+/*#popup .button:active path {
+    fill: #FFFFFF;
+}*/
 
 #popup article {
     display: flex;
@@ -268,7 +259,7 @@ thead {
 /* thead */ tr {
     min-width: fit-content;
     /*padding: 5px 10px;*/
-    display: table-row;
+    {#display: table-caption;#}
     vertical-align: inherit;
     border: inherit;
     width: 100%;
@@ -280,11 +271,12 @@ thead tr:first-child {
 
 thead tr th {
     /*padding: 10px 10px;*/
+    position: relative;
     padding: 20px 5px;
     display: table-cell;
     cursor: pointer;
-    font-weight: bold;
     border: inherit;
+    font-weight: bold;
     font-size: 18px;
     color: #FFFFFF;
     background-color: #6384A2;
@@ -292,6 +284,48 @@ thead tr th {
     width: 10%;
     /*border-width: 3px;*/
 }
+
+thead tr th:before {
+    position: absolute;
+    right: 1em;
+    content: "↓";
+    bottom: 0;
+    opacity: .5;
+}
+
+thead tr th.sorting-asc:before {
+    opacity: 1;
+}
+
+thead tr th.sorting-desc:after {
+    opacity: 1;
+}
+
+thead tr th.sorting-asc, thead tr th.sorting-desc {
+    transition: 0.3s linear;
+    outline: 3px solid darkblue/*#314C6F*/;
+}
+
+thead tr th:after {
+    position: absolute;
+    right: 0.5em;
+    content: "↑";
+    bottom: 0;
+    opacity: .5;
+}
+
+thead tr th div {
+    font-weight: inherit;
+    font-size: inherit;
+    color: inherit;
+    {#min-width: inherit;#}
+}
+
+/*thead tr th svg {
+    max-width: 20px;
+    max-height: 20px;
+    object-fit: contain;
+}*/
 
 thead tr:first-child th:first-child {
     /*border-top-left-radius: 25px;*/
@@ -335,6 +369,21 @@ tbody tr.last {
     border-bottom-right-radius: 25px;*/
 }
 
+tbody tr.filler {
+    display: table-row;
+}
+
+tbody tr td {
+    /*word-break: keep-all;
+    word-wrap: break-word;*/
+    border: inherit;
+    display: table-cell;
+    /*padding: 5px;*/
+    padding: 10px 5px;
+    width: fit-content;
+    /* width: 100%; */
+}
+
 tbody tr.last td:first-child {
     border-bottom-left-radius: inherit;
     /*padding-left: 10px;*/
@@ -345,15 +394,10 @@ tbody tr.last td:last-child {
     /*padding-right: 10px;*/
 }
 
-td {
-    /*word-break: keep-all;
-    word-wrap: break-word;*/
-    border: inherit;
-    display: table-cell;
-    /*padding: 5px;*/
-    padding: 10px 5px;
-    width: fit-content;
-    /* width: 100%; */
+tbody tr.filler td {
+    text-align: center;
+    color: inherit;
+    width: 100%;
 }
 
 .margin {
@@ -478,6 +522,8 @@ function popUp(bool=false) {
     }
 }
 // popUp();
+//const down_arrow = '<svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m5.214 14.522s4.505 4.502 6.259 6.255c.146.147.338.22.53.22s.384-.073.53-.22c1.754-1.752 6.249-6.244 6.249-6.244.144-.144.216-.334.217-.523 0-.193-.074-.386-.221-.534-.293-.293-.766-.294-1.057-.004l-4.968 4.968v-14.692c0-.414-.336-.75-.75-.75s-.75.336-.75.75v14.692l-4.979-4.978c-.289-.289-.761-.287-1.054.006-.148.148-.222.341-.221.534 0 .189.071.377.215.52z" fill-rule="nonzero"/></svg>',
+//    up_arrow = '<svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m18.787 9.473s-4.505-4.502-6.259-6.255c-.147-.146-.339-.22-.53-.22-.192 0-.384.074-.531.22-1.753 1.753-6.256 6.252-6.256 6.252-.147.147-.219.339-.217.532.001.19.075.38.221.525.292.293.766.295 1.056.004l4.977-4.976v14.692c0 .414.336.75.75.75.413 0 .75-.336.75-.75v-14.692l4.978 4.978c.289.29.762.287 1.055-.006.145-.145.219-.335.221-.525.002-.192-.07-.384-.215-.529z" fill-rule="nonzero"/></svg>';
     </script>
 {% endblock %}
 
@@ -509,18 +555,18 @@ function popUp(bool=false) {
         <table id="dataTable">
             <thead>
                 <tr>
-                    <th>Date<i class="fa-solid fa-arrow-up"></i></th>
-                    <th>Temperature (°C)</th>
-                    <th>Wind direction</th>
-                    <th>Average wind speed (m/s)</th>
-                    <th>Weather events</th>
+                    <th><div>Date</div></th>
+                    <th><div>Temperature (°C)</div></th>
+                    <th><div>Wind direction</div></th>
+                    <th><div>Average wind speed (m/s)</div></th>
+                    <th><div>Weather events</div></th>
                     <!--<th>Cloudiness</th>-->
-                    <th>Cloud cover</th>
-                    <th>Vision range (km)</th>
-                    <th>Humidity (%)</th>
-                    <th>Atmo pressure (GPa)</th>
+                    <th><div>Cloud cover</div></th>
+                    <th><div>Vision range (km)</div></th>
+                    <th><div>Humidity (%)</div></th>
+                    <th><div>Atmo pressure (GPa)</div></th>
                     <!--<th>Atmospheric pressure (GPa)</th>-->
-                    <th>Minimal cloud height (m)</th>
+                    <th><div>Minimal cloud height (m)</div></th>
                 </tr>
             </thead>
             <tbody>
@@ -608,9 +654,6 @@ file.onchange = function() {
     } else {
         label.innerHTML = text;
     }
-    // label.innerText =
-    // document.getElementById("form")
-    // label.innerText = ""
 };
 
 show.change_show = function (from, to, entries, filter=null) {
@@ -634,17 +677,20 @@ function hideRows() {
     for (let i = page * entry_num; i < Math.min((page + 1) * entry_num, rows.length); i++) {
         rows[i].removeAttribute("style");
     }
-    let last = document.querySelector("tbody .last")
+    /*let last = document.querySelector("tbody .last")
     if (last) {
         last.classList.remove("last");
-    }
+    }*/
+    document.querySelector("tbody .last")?.classList.remove("last");
 }
 
 function check() {
+    //rows_tr = document.querySelectorAll("tbody tr");
     if (rows_tr.length === 0) {
         let row = document.createElement("tr");
         data_table.getElementsByTagName('tbody')[0].appendChild(row);
         row.classList.add("filler");
+        row.classList.add("last");
         row.innerHTML = `<td colspan='${data_table.getElementsByTagName("th").length}'>No data available in table</td>`;
         return false;
     }
@@ -652,6 +698,7 @@ function check() {
 }
 
 function revealRows() {
+    rows_tr = document.querySelectorAll("tbody tr");
     if (rows_tr.length !== 0) {
         let rows_num = Math.min((page + 1) * entry_num, rows_tr.length);
         for (let i = page * entry_num; i < rows_num; i++) {
@@ -665,6 +712,7 @@ function revealRows() {
 }
 
 function changePaginatorButtons() {
+    //rows_tr = document.querySelectorAll("tbody tr");
     let array = paginator_buttons.querySelectorAll("li");
     let last_page = Math.ceil(rows_tr.length / entry_num);
     for (let i of array) {
@@ -730,6 +778,7 @@ function changePaginatorButtons() {
 }
 
 function paginateHandler() {
+    //rows_tr = document.querySelectorAll("tbody tr");
     hideRows();
     page = Number(this.innerText) - 1;
     revealRows();
@@ -737,6 +786,7 @@ function paginateHandler() {
 }
 
 entries.onchange = function() {
+    //rows_tr = document.querySelectorAll("tbody tr");
     hideRows();
     page = 0;
     entry_num = this.options[this.selectedIndex].value;
@@ -762,10 +812,10 @@ entries.onchange = function() {
         changePaginatorButtons();
     }
 };
-entries.onchange(null);
 
 
 prev.onclick = function() {
+    //rows_tr = document.querySelectorAll("tbody tr");
     if (page !== 0) {
         hideRows()
         page--;
@@ -775,6 +825,7 @@ prev.onclick = function() {
 }
 
 next.onclick = function() {
+    //rows_tr = document.querySelectorAll("tbody tr");
     if (page !== Math.ceil(rows_tr.length / entry_num - 1)) {
         hideRows()
         page++;
@@ -782,6 +833,174 @@ next.onclick = function() {
         changePaginatorButtons();
     }
 }
+let ths = data_table.querySelectorAll("thead tr th");
+{#console.log(ths);#}
+
+function sortHandler() {
+    let order = true;
+    if (this.classList.contains("sorting-asc")) {
+        this.classList.remove("sorting-asc");
+        this.classList.add("sorting-desc");
+        order = false;
+    } else if (this.classList.contains("sorting-desc")) {
+        this.classList.remove("sorting-desc");
+        this.classList.add("sorting-asc");
+    } else {
+        data_table.querySelector("thead tr th.sorting-asc")?.classList.remove("sorting-asc");
+        data_table.querySelector("thead tr th.sorting-desc")?.classList.remove("sorting-desc");
+        this.classList.add("sorting-asc");
+    }
+    {#hideRows();#}
+    sort(rows_tr, order, Number(this.getAttribute("data-column")));
+    {#revealRows();#}
+}
+
+function swap(items, leftIndex, rightIndex) {
+    /*let temp = items[leftIndex];
+    items[leftIndex] = items[rightIndex];
+    items[rightIndex] = temp;*/
+    let temp = items[leftIndex].innerHTML;
+    items[leftIndex].innerHTML = items[rightIndex].innerHTML;
+    items[rightIndex].innerHTML = temp;
+    {#items[leftIndex].parentNode.insertBefore(items[rightIndex], items[leftIndex]);#}
+}
+let regex = new RegExp("[0-9]{2} [A-Za-z]{3} [0-9]{4} [0-9]{2}:[0-9]{2}");
+function partition(items, left, right, order, column_num) {
+    let pivot = items[Math.floor((right + left) / 2)].getElementsByTagName("td")[column_num],
+        i = left,
+        j = right,
+        templ,
+        tempr;
+    while (i <= j) {
+        //if (order) {
+            while (true) {
+                templ = items[i].getElementsByTagName("td")[column_num].innerText;
+                tempr = pivot.innerText;
+                if (regex.test(templ) || regex.test(tempr)) {
+                    templ = Date.parse(templ);
+                    tempr = Date.parse(tempr);
+                }
+                if ((templ < tempr && order) || (templ > tempr && !order)) {
+                    i++;
+                } else {
+                    break;
+                }
+            }
+        /*} else {
+            while (true) {
+                if (Date.parse(items[i].getElementsByTagName("td")[column_num].innerText) > Date.parse(pivot.innerText)) {
+                    i++;
+                } else {
+                    break;
+                }
+            }
+        }*/
+
+        //if (order) {
+            while (true) {
+                templ = items[j].getElementsByTagName("td")[column_num].innerText;
+                tempr = pivot.innerText;
+                if (regex.test(templ) || regex.test(tempr)) {
+                    templ = Date.parse(templ);
+                    tempr = Date.parse(tempr);
+                }
+                if ((templ > tempr && order) || (templ < tempr && !order)) {
+                    j--;
+                } else {
+                    break;
+                }
+            }
+        /*} else {
+            while (true) {
+                if (Date.parse(items[j].getElementsByTagName("td")[column_num].innerText) < Date.parse(pivot.innerText)) {
+                    j--;
+                } else {
+                    break;
+                }
+            }
+        }*/
+
+        if (i <= j) {
+            /*console.log(`Pivot: ${pivot}, leftIndex: ${i}, rightIndex: ${j}, leftIndexValue: ${
+                items[i].getElementsByTagName("td")[column_num].innerText}, rightIndexValue ${items[j].getElementsByTagName("td")[column_num].innerText}`)*/
+            swap(items, i, j);
+            i++;
+            j--;
+        }
+    }
+    return i;
+}
+
+function quickSort(items, left, right, order, column_num) {
+    let index;
+
+    if (items.length > 1) {
+        index = partition(items, left, right, order, column_num);
+
+        if (left < index - 1) {
+            quickSort(items, left, index - 1, order, column_num);
+        }
+
+        if (index < right) {
+            quickSort(items, index, right, order, column_num);
+        }
+    }
+
+    {#return items;#}
+}
+
+function sort(array, order, column_num) {
+    {#console.log(column_num);#}
+    {#console.log(order);#}
+    page = 0;
+    quickSort(array, 0, array.length - 1, order, column_num)
+    {#console.log(array);#}
+}
+
+/*function sort(column_num, order) {
+    let switching = true, should_switch, rows, x, y, i;
+    rows = data_table.querySelectorAll("tbody tr");
+
+    while (switching) {
+        switching = false;
+
+        for (i = 0; i < (rows.length - 1); i++) {
+            should_switch = false;
+
+            x = rows[i].getElementsByTagName("td")[column_num];
+            y = rows[i + 1].getElementsByTagName("td")[column_num];
+            if ((!order && x.innerText.toLowerCase() > y.innerText.toLowerCase()) ||
+                (order && x.innerText.toLowerCase() < y.innerText.toLowerCase())) {
+                should_switch = true;
+                break;
+            }
+        }
+        if (should_switch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            let temp = rows[i];
+            rows[i] = rows[i + 1];
+            rows[i + 1] = temp;
+        }
+    }
+}*/
+
+for (let i = 0; i < ths.length; i++) {
+    ths[i].setAttribute('data-column', i.toString());
+    ths[i].onclick = sortHandler;
+}
+
+{#ths[0].classList.add("sorting-asc");#}
+//sort(0, false);
+entries.onchange(null);
+ths[0].onclick(null);
+/*let array = [1, 4, 7, 2, 6];
+console.log(array);
+console.log(quickSort(array, 0, array.length - 1, true));
+console.log(quickSort(array, 0, array.length - 1, false));*/
+/*for (let i of data_table.querySelectorAll("thead tr th")) {
+    i.innerHTML += down_arrow + up_arrow;
+}*/
 
 </script>
 

@@ -9,18 +9,6 @@ def get_value(dictionary, key):
     return dictionary.get(key)
 
 
-# @register.filter
-# def replace(value, arg):
-#     """
-#     Replacing filter
-#     Use `{{ "aaa"|replace:"a|b" }}`
-#     """
-#     if len(arg.split('|')) != 2:
-#         return value
-#
-#     what, to = arg.split('|')
-#     return value.replace(what, to)
-
 @register.filter
 def modify(dictionary, string):
     newstr = string
