@@ -1,10 +1,30 @@
 {% extends 'main/layout.html' %}
 {% load static %}
-{% load poll_extras %}
 
 {% block head %}
     <title>Data</title>
-    <link rel="stylesheet" href="{% static 'main/css/data.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/upload.css' %}">
+    <style>
+    /*body > img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    map area {
+        border: darkblue 3px solid;
+    }*/
+    .map {
+        margin: 0 auto;
+        width: fit-content;
+        height: fit-content;
+        padding: 0 80px;
+    }
+
+    .map map:hover area {
+        outline: 1px darkblue solid;
+    }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
 function popUp(bool=false) {
@@ -18,7 +38,6 @@ function popUp(bool=false) {
 {% endblock %}
 
 {% block body %}
-
 <div class="button margin-center" id="upload" onclick="popUp(true);">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
         <path fill="#1F3C5C" fill-rule="evenodd" d="m7.866 0 4.37 4.033-.823.892-2.924-2.7v10.137H7.276V2.305L4.673
@@ -28,67 +47,7 @@ function popUp(bool=false) {
         UPLOAD
     </span>
 </div>
-<div class="card margin-center">
-    <div class="flex-row margin">
-        <span class="label">
-            Show
-            <select id="entries">
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-            entries
-        </span>
-    </div>
-    <div class="table">
-        <table id="dataTable">
-            <thead>
-                <tr>
-                    <th><div>Date</div></th>
-                    <th><div>Temperature (°C)</div></th>
-                    <th><div>Wind direction</div></th>
-                    <th><div>Average wind speed (m/s)</div></th>
-                    <th><div>Weather events</div></th>
-                    <!--<th>Cloudiness</th>-->
-                    <th><div>Cloud cover</div></th>
-                    <th><div>Vision range (km)</div></th>
-                    <th><div>Humidity (%)</div></th>
-                    <th><div>Atmo pressure (GPa)</div></th>
-                    <!--<th>Atmospheric pressure (GPa)</th>-->
-                    <th><div>Minimal cloud height (m)</div></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if data %}
-                {% for item in data %}
-                <tr>
-                    <td>{{ item.date|date:"d M Y H:i" }}</td>
-                    <td>{{ item.temperature }}</td>
-                    <td>{{ item.direction }}</td>
-                    <td>{{ item.velocity }}</td>
-                    <td>{{ codes|modify:item.weather_code }}</td>
-                    <td>{{ dictionary|get_value:item.cloud_amount }}</td>
-                    <td>{{ item.visibility_range }}</td>
-                    <td>{{ item.humidity }}</td>
-                    <td>{{ item.atmo_pressure }}</td>
-                    <td>{{ item.lower_cloud_limit }}</td>
-                </tr>
-                {% endfor %}
-                {% endif %}
-            </tbody>
-        </table>
-    </div>
-    <div class="margin flex-row">
-        <span class="label" id="show">Showing 0 to 0 of 0 entries </span>
-        <ul class="pagination" id="paginator">
-            <li class="disabled" id="prev">Previous</li>
-            <span class="invisible" id="paginator-buttons">
-            </span>
-            <li id="next">Next</li>
-        </ul>
-    </div>
-</div>
+
 <div id="fade">
   <div id="popup">
     <div class="button" onclick="popUp();">
@@ -114,7 +73,30 @@ function popUp(bool=false) {
     </form>
   </div>
 </div>
-<script src="{% static 'main/js/data.js' %}"></script>
+
+<div class="map">
+  <map name="ukraine">
+    <area shape="poly" alt="Lviv" title="Lviv" href="#" onclick="alert('hello');" coords="96,103,  99,103,  101,106,  108,105,
+    111,111,  109,114,  109,117,  114,118,  118,124,  132,124,  134,128,  138,128,  137,133,  136,140,  139,142,
+    143,143,  146,145,  146,153,  143,157,  134,157,  130,159,  130,165,  126,164,  122,171,  117,172,  115,177,
+    112,175,  103,174,  101,180,  99,183,  101,185,  98,187,  99,193,  102,194,  101,196,  72,198,  67,200,  67,203,
+    63,206,  61,211,  63,217,  62,221,  46,215,  46,211,  38,210,  36,207,  36,195,  32,190,  31,163,  38,161,  40,155,
+    50, 148,  55,139,  69,129,  81,118,  89,117,  96,108">
+    <!-- 1:96, 103/ 2:99, 103/ 3:101, 106/ 4:108, 105/ 5:111, 111/ 6:109, 114/ 7:109, 117/ 8:114, 118/ 9:118, 124/
+    10:132, 124/ 11:134, 128/ 12:138, 128/ 13:137, 133/ 14:136, 140/ 15:139, 142/ 16:143, 143/ 17:146, 145/
+    18:146, 153/ 19:143, 157/ 20:134, 157/ 21:130, 159/ 22:130, 165/ 23:126, 164/ 24:122, 171/ 25:117, 172/
+    26:115, 177/ 27:112, 175/ 28:103, 174/ 29:101, 180/ 30:99, 183/ 31:101, 185/ 32:98, 187/ 33:99, 193/
+    34:102, 194/ 35:101, 196/ 36:72, 198/ 37:67, 200/ 38:67, 203/ 39:63, 206/ 40:61, 211/ 41:63, 217/
+    42:62, 221/ 43:46, 215/ 44:46, 211/ 45:38, 210/ 46:36, 207/ 47:36, 195/ 48:32, 190/ 49:31, 163/
+    50:38, 161/ 51:40, 155/ 52:50, 148/ 53:55, 139/ 54:69, 129/ 55:81, 118/ 56:89, 117/ 57:96, 108 -->
+  </map>
+  <img src="{% static 'main/img/ukraine.png' %}" alt="Ukraine" usemap="#ukraine"> <!--  class="margin-center"-->
+</div>
+<script src="{% static 'main/js/popup.js' %}"></script>
+<script src="https://projects.davidlynch.org/maphilight/jquery.maphilight.js"></script>
+<script>
+$('img[usemap]').maphilight({fill: false, fade: false, strokeColor: '1F3C5C', strokeWidth: 3, shadow: true{% comment %}, shadowColor: 'FFFFFF'{% endcomment %}});
+</script>
 
 {% if message %}
 <script>

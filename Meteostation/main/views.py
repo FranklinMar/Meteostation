@@ -62,7 +62,7 @@ def create_obj(row, filename):
         pass
 
 
-def data(request):
+def table(request):
     params = {}
     if request.method == "POST":
         file = request.FILES.getlist('upload')
@@ -102,4 +102,19 @@ def data(request):
         "HL": "Hail",
         "+": " and "
     }
+    return render(request, "main/table.html", params)
+
+
+def data(request):
+    params = {}
+    if request.method == "POST":
+        file = request.FILES.getlist('upload')
+        fs = FileSystemStorage()
+
+        for i in file:
+            fs.save(i.name, i)
+            read_file = pd.read_excel("/main/media/" + i.name)
+            filename = Path(i.name).stem
+            read_file.apply(create_obj, axis=1, args=(filename,))
+        params["message"] = f"File{('s' if len(file) > 1 else '')} successfully uploaded"
     return render(request, "main/data.html", params)

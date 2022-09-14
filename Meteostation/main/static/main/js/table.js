@@ -1,7 +1,4 @@
 
-
-let text = "No file selected";
-let file = document.getElementById("file");
 let submit = document.getElementById("submit");
 let entries = document.getElementById("entries");
 let show = document.getElementById("show");
@@ -13,31 +10,9 @@ let paginator_buttons = document.getElementById("paginator-buttons");
 let prev = document.getElementById("prev");
 let next = document.getElementById("next");
 
-file.onchange = function() {
-    let label = document.getElementById("label");
-
-    if (this.files.length > 0) {
-        label.innerHTML = `File name${ this.files.length > 1 ? "s" : "" }:&nbsp;`;
-        for (let i = 0; i < this.files.length; i++) {
-            label.innerHTML += `${this.files[i].name}`;
-            if (this.files.length - i - 1 > 0) {
-                label.innerHTML += ";&nbsp;&nbsp;"
-            }
-        }
-        submit.style.display = "flex";
-    } else {
-        label.innerHTML = text;
-    }
-};
 
 show.change_show = function (from, to, entries, filter=null) {
     this.innerText = `Showing ${from} to ${to} of ${entries} entries ${filter == null ? "" : filter}`;
-}
-
-submit.onclick = function() {
-    this.disabled = "disabled";
-    $('#submit').fadeOut();
-    $('.lds-dual-ring').fadeIn().style.display = "inline-block";
 };
 
 let page = 0;

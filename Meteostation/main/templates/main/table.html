@@ -1,0 +1,126 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% load poll_extras %}
+
+{% block head %}
+    <title>Table</title>
+    <link rel="stylesheet" href="{% static 'main/css/table.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/upload.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+function popUp(bool=false) {
+    if (bool) {
+        $("#fade").fadeIn();
+    } else {
+        $("#fade").fadeOut();
+    }
+}
+    </script>
+{% endblock %}
+
+{% block body %}
+
+<div class="button margin-center" id="upload" onclick="popUp(true);">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+        <path fill="#1F3C5C" fill-rule="evenodd" d="m7.866 0 4.37 4.033-.823.892-2.924-2.7v10.137H7.276V2.305L4.673
+        4.908l-.857-.858L7.866 0ZM1.213 14.787V7.511H0V16h15.766V7.51h-1.213v7.277H1.213Z" clip-rule="evenodd"></path>
+    </svg>
+    <span>
+        UPLOAD
+    </span>
+</div>
+<div class="card margin-center">
+    <div class="flex-row margin">
+        <span class="label">
+            Show
+            <select id="entries">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            entries
+        </span>
+    </div>
+    <div class="table">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th><div>Date</div></th>
+                    <th><div>Temperature (°C)</div></th>
+                    <th><div>Wind direction</div></th>
+                    <th><div>Average wind speed (m/s)</div></th>
+                    <th><div>Weather events</div></th>
+                    <!--<th>Cloudiness</th>-->
+                    <th><div>Cloud cover</div></th>
+                    <th><div>Vision range (km)</div></th>
+                    <th><div>Humidity (%)</div></th>
+                    <th><div>Atmo pressure (GPa)</div></th>
+                    <!--<th>Atmospheric pressure (GPa)</th>-->
+                    <th><div>Minimal cloud height (m)</div></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if data %}
+                {% for item in data %}
+                <tr>
+                    <td>{{ item.date|date:"d M Y H:i" }}</td>
+                    <td>{{ item.temperature }}</td>
+                    <td>{{ item.direction }}</td>
+                    <td>{{ item.velocity }}</td>
+                    <td>{{ codes|modify:item.weather_code }}</td>
+                    <td>{{ dictionary|get_value:item.cloud_amount }}</td>
+                    <td>{{ item.visibility_range }}</td>
+                    <td>{{ item.humidity }}</td>
+                    <td>{{ item.atmo_pressure }}</td>
+                    <td>{{ item.lower_cloud_limit }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div class="margin flex-row">
+        <span class="label" id="show">Showing 0 to 0 of 0 entries </span>
+        <ul class="pagination" id="paginator">
+            <li class="disabled" id="prev">Previous</li>
+            <span class="invisible" id="paginator-buttons">
+            </span>
+            <li id="next">Next</li>
+        </ul>
+    </div>
+</div>
+<div id="fade">
+  <div id="popup">
+    <div class="button" onclick="popUp();">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18">
+        <path fill="#1f3c5c" fill-rule="evenodd" d="M8.057 9 .53 1.471 1.47.53 9 8.057 16.529.53l.942.942L9.943 9l7.528
+        7.529-.942.942L9 9.943 1.471 17.47l-.941-.94L8.057 9Z" clip-rule="evenodd"></path>
+      </svg>
+    </div>
+    <article>
+      <h1>Upload data</h1>
+      <p>Upload a <span>.xslx file</span> or a <span>directory</span> with such files.</p>
+    </article>
+
+    <form id="form" class="image" enctype="multipart/form-data" method="POST">
+      <label class="file">
+        {% csrf_token %}
+        <input id="file" type="file" name="upload" accept=".xlsx, .csv, .txt" directory multiple style="display: contents;"/><!--  accept=".xlsx, .csv, .txt" webkitdirectory -->
+        <p><span>Drag here</span> your file or <span>Click here</span> to upload</p>
+      </label>
+      <p id="label">No file selected</p>
+      <button type="submit" style="display: none; align-self: center" id="submit" class="button"><span>UPLOAD</span></button>
+      <div class="lds-dual-ring"></div>
+    </form>
+  </div>
+</div>
+<script src="{% static 'main/js/table.js' %}"></script>
+<script src="{% static 'main/js/popup.js' %}"></script>
+
+{% if message %}
+<script>
+    alert("{{ message }}")
+</script>
+{% endif %}
+{% endblock %}
