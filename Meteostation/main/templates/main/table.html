@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static 'main/css/table.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/upload.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
+    {% comment %}<script>
 function popUp(bool=false) {
     if (bool) {
         $("#fade").fadeIn();
@@ -15,12 +15,12 @@ function popUp(bool=false) {
         $("#fade").fadeOut();
     }
 }
-    </script>
+    </script>{% endcomment %}
 {% endblock %}
 
 {% block body %}
 
-<div class="button margin-center" id="upload" onclick="popUp(true);">
+{% comment %}<div class="button margin-center" id="upload" onclick="popUp(true);">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
         <path fill="#1F3C5C" fill-rule="evenodd" d="m7.866 0 4.37 4.033-.823.892-2.924-2.7v10.137H7.276V2.305L4.673
         4.908l-.857-.858L7.866 0ZM1.213 14.787V7.511H0V16h15.766V7.51h-1.213v7.277H1.213Z" clip-rule="evenodd"></path>
@@ -28,7 +28,7 @@ function popUp(bool=false) {
     <span>
         UPLOAD
     </span>
-</div>
+</div>{% endcomment %}
 <div class="card margin-center">
     <div class="flex-row margin">
         <span class="label">
@@ -90,7 +90,7 @@ function popUp(bool=false) {
         </ul>
     </div>
 </div>
-<div id="fade">
+{% comment %}<div id="fade">
   <div id="popup">
     <div class="button" onclick="popUp();">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18">
@@ -114,13 +114,13 @@ function popUp(bool=false) {
       <div class="lds-dual-ring"></div>
     </form>
   </div>
-</div>
+</div>{% endcomment %}
 <script src="{% static 'main/js/table.js' %}"></script>
-<script src="{% static 'main/js/popup.js' %}"></script>
+{% comment %}<script src="{% static 'main/js/popup.js' %}"></script>
 
 {% if message %}
 <script>
     alert("{{ message }}")
 </script>
-{% endif %}
+{% endif %}{% endcomment %}
 {% endblock %}

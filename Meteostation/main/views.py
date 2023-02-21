@@ -90,6 +90,7 @@ def table(request):
     }
     params["codes"] = {
         "CL": "Clear",
+        "BL": "Haze",
         "BR": "Haze",
         "FG": "Fog",
         "SNRA": "Snow with rain",
