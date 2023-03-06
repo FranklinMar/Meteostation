@@ -19,11 +19,31 @@ file.onchange = function() {
     }
 };
 
-form.onsubmit = function() {
+/*form.onsubmit = function() {
     file.disabled = "disabled";
     $('#label').fadeOut();
-    $('#submit').fadeOut();
-    $('.lds-dual-ring').fadeIn();//.style.display = "inline-block";
-    document.querySelector(".lds-dual-ring").style.display = "inline-block";
-    // this.submit();
-};
+    $('#submit').fadeOut(function (){
+        $('.lds-dual-ring').fadeIn();//.style.display = "inline-block";
+        document.querySelector(".lds-dual-ring").style.display = "inline-block";
+    });
+    *if (window.FormData !== undefined) {
+        event.preventDefault();
+        let formData = new FormData(this);
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', $(this).attr('action'), true);
+        xhr.setRequestHeader('X-REQUESTED-WITH', 'XMLHttpRequest')
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState === 4) {
+                if(xhr.status === 200) {
+                    result = JSON.parse(xhr.responseText);
+                    // Code for success upload
+                }
+                else {
+                    // Code for error
+                }
+            }
+        };
+        xhr.send(formData);
+    }*
+    this.submit();
+};*/
