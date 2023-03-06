@@ -58,6 +58,7 @@ thead tr th {
     background-color: #6384A2;
     min-width: fit-content;
     width: 10%;
+    user-select: none;
     /*border-width: 3px;*/
 }
 
