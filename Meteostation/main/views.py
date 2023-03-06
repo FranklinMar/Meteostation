@@ -1,8 +1,13 @@
 from .models import Direction
 from .models import Data
+from .models import Region
+from .forms import UploadFileForm
+
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 from django.db import IntegrityError
+# from django.views.generic import *
+from django.views.decorators.cache import never_cache
 # from django.http import HttpResponse
 
 from datetime import datetime
@@ -13,6 +18,13 @@ import pandas as pd
 
 # Create your views here.
 
+# class TableView(DetailView):
+#     model = Region
+#     template_name = 'main/table.html'
+#     context_object_name = 'region'
+#     slug_field = 'name'
+#     slug_url_kwarg = 'name'
+
 
 def home(request):
     # objects = Data.objects.all()
@@ -21,7 +33,7 @@ def home(request):
     return render(request, "main/home.html")  # , {'objects': objects})
 
 
-def create_obj(row, filename):
+def create_obj(row, filename, region_data):
     date = datetime.strptime(f"{filename}-{row[0]} {row[1]} +0300", '%Y-%m-%d %H:%M:%S %z')
     temperature = 0 if f"{row[2]}" == "nan" else int(row[2])
 
@@ -54,27 +66,51 @@ def create_obj(row, filename):
     pressure = None if f"{row[9]}" == "nan" else int(row[9])
     lower_limit = None if f"{row[10]}" == "nan" else int(row[10])
     try:
-        Data.objects.create(date=date, temperature=temperature, direction=direction,
+        datas = Data.objects.create(date=date, temperature=temperature, direction=direction,
                             velocity=velocity, weather_code=code, cloud_amount=clouds,
                             visibility_range=visibility, humidity=humidity, atmo_pressure=pressure,
                             lower_cloud_limit=lower_limit)
+        region_data.add(datas)
     except IntegrityError:
         pass
 
 
-def table(request):
+@never_cache
+# def table(request):
+def table(request, name=None):
     params = {}
     if request.method == "POST":
-        file = request.FILES.getlist('upload')
-        fs = FileSystemStorage()
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = request.FILES.getlist('file')  # ['upload']
+            print(file)
+            if len(file) == 0:
+                file = [request.FILES['file']]
+            print(file)
+            # print(file.name)
+            # print(file.size)
+            # region = request.POST.get('region')
+            region = Region.objects.get(name__exact=name).datas
+            # file = request.FILES.getlist('upload')  # .POST.get('upload')
+            # print(type(file).__name__)
+            fs = FileSystemStorage()
+            # print(len(file))
 
-        for i in file:
-            fs.save(i.name, i)
-            read_file = pd.read_excel("/main/media/" + i.name)
-            filename = Path(i.name).stem
-            read_file.apply(create_obj, axis=1, args=(filename,))
-        params["message"] = f"File{('s' if len(file) > 1 else '')} successfully uploaded"
-    params["data"] = Data.objects.all()  # [0:70]
+            for i in file:
+                fs.save(i.name, i)
+                read_file = pd.read_excel("/main/media/" + i.name)
+                filename = Path(i.name).stem
+                print(i)
+                read_file.apply(create_obj, axis=1, args=(filename, region))
+            params["message"] = f"File{('s' if len(file) > 1 else '')} successfully uploaded"
+    else:
+        form = UploadFileForm()
+    params["form"] = form
+    params["name"] = name
+    params["data"] = Region.objects.get(name__exact=name).datas.all() if name else None  # Data.objects.all()  # [0:70]
+    # lviv = Region.objects.get(name="Lviv").datas
+    # for datas in params["data"]:
+    #     lviv.add(datas)
     params["dictionary"] = {
         0: "Clear",
         1: "Low",
@@ -106,16 +142,22 @@ def table(request):
     return render(request, "main/table.html", params)
 
 
-def data(request):
-    params = {}
-    if request.method == "POST":
-        file = request.FILES.getlist('upload')
-        fs = FileSystemStorage()
+# def regions(request):
+#     return render(request, "main/data.html", {regions: Region.objects.all()})
 
-        for i in file:
-            fs.save(i.name, i)
-            read_file = pd.read_excel("/main/media/" + i.name)
-            filename = Path(i.name).stem
-            read_file.apply(create_obj, axis=1, args=(filename,))
-        params["message"] = f"File{('s' if len(file) > 1 else '')} successfully uploaded"
-    return render(request, "main/data.html", params)
+
+@never_cache
+def data(request):
+    return render(request, "main/data.html", {"regions": Region.objects.all()})
+    # params = {}
+    # if request.method == "POST":
+    #     file = request.FILES.getlist('upload')
+    #     fs = FileSystemStorage()
+    #
+    #     for i in file:
+    #         fs.save(i.name, i)
+    #         read_file = pd.read_excel("/main/media/" + i.name)
+    #         filename = Path(i.name).stem
+    #         read_file.apply(create_obj, axis=1, args=(filename,))
+    #     params["message"] = f"File{('s' if len(file) > 1 else '')} successfully uploaded"
+    # return render(request, "main/data.html", params)
