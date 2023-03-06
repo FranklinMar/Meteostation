@@ -44,3 +44,15 @@ class Data(models.Model):
     class Meta:
         # verbose_name = 'Data'
         verbose_name_plural = 'Data'
+
+
+class Region(models.Model):
+    name = models.CharField('Область', max_length=20, unique=True, null=True)
+    coords = models.TextField('Координати мапи', max_length=1000, null=False, default='')
+    datas = models.ManyToManyField(Data, blank=True)
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
