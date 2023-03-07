@@ -107,7 +107,7 @@ thead tr th div {
     max-height: 20px;
     object-fit: contain;
 }*/
-table a {
+table thead a {
     /*color: inherit; blue colors for links too
     text-decoration: inherit; no underline */
     all: inherit;
@@ -176,8 +176,8 @@ tbody tr.filler {
 tbody tr td {
     /*word-break: keep-all;
     word-wrap: break-word;*/
-    /*border: inherit;
-    display: table-cell;*/
+    border: inherit;
+    display: table-cell;
     /*padding: 5px;*/
     padding: 10px 5px;
     width: fit-content;
@@ -261,7 +261,7 @@ select:hover, select:focus {
     border-radius: 0.35rem;
 }
 
-.pagination li {
+.pagination a {
     font-size: 1rem;
     font-weight: 400;
     /*line-height: 1.5;
@@ -280,7 +280,11 @@ select:hover, select:focus {
     /* user-select: auto; */
 }
 
-.pagination li.active {
+.pagination a * {
+    user-select: none;
+}
+
+.pagination a.active {
     z-index: 3;
     color: #fff;
     background-color: #4e73df;
@@ -289,7 +293,7 @@ select:hover, select:focus {
     cursor: pointer;
 }
 
-.pagination li.disabled {
+.pagination a.disabled {
     color: #858796;
     pointer-events: none;
     cursor: auto;
@@ -297,21 +301,21 @@ select:hover, select:focus {
     border-color: #dddfeb;*/
 }
 
-.pagination li:first-child {
+.pagination a:first-child {
     margin-left: 0;
     border-radius: 0.35rem 0 0 0.35rem;
 }
 
-.pagination li:last-child {
+.pagination a:last-child {
     border-radius: 0 0.35rem 0.35rem 0;
 }
 
-.pagination li:hover {
+.pagination a:hover {
     transition: 0.2s linear;
     background: #e5e6ea;
 }
 
-.pagination li:focus {
+.pagination a:focus {
     transition: 0.3s linear;
     outline: 2px solid lightblue;
 }

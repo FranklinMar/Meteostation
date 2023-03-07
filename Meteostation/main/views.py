@@ -12,7 +12,7 @@ from django.db import IntegrityError
 from django.views.decorators.cache import never_cache
 # from django.http import HttpResponse
 
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger
 from datetime import datetime
 
 from pathlib import Path
@@ -127,7 +127,11 @@ def table(request, name=None):
         paginator = Paginator(region_data, per_page=limit)
         # print(paginator.get_page(page_number))
         params["page_obj"] = paginator.get_page(page_number)  # Data.objects.all()  # [0:70]
-    except (TypeError, ValueError):
+        params["page_range"] = list(str(i) for i in paginator.get_elided_page_range(page_number, on_each_side=2))
+        # print(params["page_range"])
+        params["page_number"] = str(params["page_obj"].number)
+        # print(list(paginator.get_elided_page_range(page_number, on_each_side=2)))
+    except (TypeError, ValueError, PageNotAnInteger):
         params["page_obj"] = None
     # print(type(params["page_obj"].object_list).__name__)
     # params["data"] = paginator.get_page(page_number).object_list

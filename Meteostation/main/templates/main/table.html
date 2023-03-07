@@ -42,7 +42,7 @@
             entries
         </span>
     </div>
-    <div class="table pagination">
+    <div class="table">
         <table id="dataTable">
             <thead>
                 <tr>
@@ -81,20 +81,27 @@
     <div class="margin flex-row">
         {% comment %}<span class="label" id="show">Showing 0 to 0 of 0 entries </span>{% endcomment %}
         <span class="label" id="show">Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} entries </span>
-        <ul class="pagination" id="paginator">
+        <div class="pagination" id="paginator">
             {% if page_obj.has_previous %}
-            <li id="prev"><a href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            <a id="prev" href="?page={{ page_obj.previous_page_number }}">Previous</a>
             {% else %}
-            <li class="disabled" id="prev">Previous</li>
+            <a class="disabled" id="prev">Previous</a>
             {% endif %}
+            {% for page in page_range %}
+                {% if page != '…' %}
+                    <a href="?page={{ page }}" {% if page == page_number %}class="active"{% endif %}>{{ page }}</a>
+                {% else %}
+                    <a class="disabled">{{ page }}</a>
+                {% endif %}
+            {% endfor %}
             <span class="invisible" id="paginator-buttons">
             </span>
             {% if page_obj.has_next %}
-            <li id="next"><a href="?page={{ page_obj.next_page_number }}">Next</a></li>
+            <a id="next" href="?page={{ page_obj.next_page_number }}">Next</a>
             {% else %}
-            <li class="disabled" id="next">Next</li>
+            <a class="disabled" id="next">Next</a>
             {% endif %}
-        </ul>
+        </div>
     </div>
 </div>
 <div id="fade">
