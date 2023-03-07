@@ -108,6 +108,9 @@ def table(request, name=None):
     params["form"] = form
     params["name"] = name
     params["data"] = Region.objects.get(name__exact=name).datas.all() if name else None  # Data.objects.all()  # [0:70]
+    # lviv = Region.objects.get(name="Lviv")
+    # lviv.offset_y = -10
+    # lviv.save()
     # lviv = Region.objects.get(name="Lviv").datas
     # for datas in params["data"]:
     #     lviv.add(datas)

@@ -26,6 +26,9 @@
     }
     .map_title {
         position: absolute;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 700;
         color: #FFFFFF;
     }
 
@@ -87,7 +90,8 @@ function popUp(bool=false) {
       {% if regions %}
       {% for region in regions %}
       <area shape="poly" title="{{ region.name }}" href="{% url 'data-table' region.name %}"
-            coords="{{ region.coords }}">
+            coords="{{ region.coords }}" alt="{{ region.name }}" data-offset-x="{{ region.offset_x }}"
+            data-offset-y="{{ region.offset_y }}">
       {% endfor %}
       {% endif %}
     {% comment %}<area shape="poly" alt="Lviv" title="Lviv" href="#" onclick="alert('hello');" coords="96,103,  99,103,  101,106,
@@ -139,13 +143,18 @@ $('area').each(function(){
     }
     //let map_top = $('.map').top, map_left = $('.map').left;
     let left_title = left + (right - left) / 2,
-        top_title = top + (bottom - top) / 2 - 10;
-    let span = $("<span class='map_title'>" + title + "</span>");
+        top_title = top + (bottom - top) / 2;
+        //right_title = right - (right - left) / 2;
+    let span = $(`<span class='map_title'>${title.replace('-', '-<br>-')}</span>`);
+    /*if ((right_title - left_title) <= span.width) {
+        span = $(`<span class='map_title'>${span.innerText.replace("-", "-<br>-")}</span>`);
+    }*/
     let padding = parseInt($('.map').css('padding').split(' ')[1]);
     span.data('title', title);
-    span.css({top:top_title + 'px', position:'absolute', transition:'0.1s linear', pointerEvents:'none'});
+    span.css({top:(top_title + parseFloat($(this).data('offset-y'))) + 'px', position:'absolute',
+        transition:'0.1s linear', pointerEvents:'none'});
     span.appendTo('.map');
-    span.css({left:(left_title - Math.ceil(span.width() / 2) + padding) + 'px'});
+    span.css({left:(left_title - Math.ceil(span.width() / 2) + padding + parseFloat($(this).data('offset-x'))) + 'px'});
 });
 /*$('area').mouseover(function() {
     $('.map span[data-title="' + $(this).attr('title') + '"]').css({color:'#FFFFFF'});
