@@ -90,11 +90,12 @@ function popUp(bool=false) {
       {% if regions %}
       {% for region in regions %}
       <area shape="poly" title="{{ region.name }}" href="{% url 'data-table' region.name %}"
-            coords="{{ region.coords }}" alt="{{ region.name }}" data-offset-x="{{ region.offset_x }}"
+            coords="{{ region.coords }}" data-offset-x="{{ region.offset_x }}"
             data-offset-y="{{ region.offset_y }}">
       {% endfor %}
       {% endif %}
-    {% comment %}<area shape="poly" alt="Lviv" title="Lviv" href="#" onclick="alert('hello');" coords="96,103,  99,103,  101,106,
+      {% comment %}<area shape="poly" title="Odesa" href="#" coords=""  data-offset-x="" data-offset-y="">{% endcomment %}
+      {% comment %}<area shape="poly" alt="Lviv" title="Lviv" href="#" onclick="alert('hello');" coords="96,103,  99,103,  101,106,
     108,105,  111,111,  109,114,  109,117,  114,118,  118,124,  132,124,  134,128,  138,128,  137,133,  136,140,
     139,142,  143,143,  146,145,  146,153,  143,157,  134,157,  130,159,  130,165,  126,164,  122,171,  117,172,
     115,177,  112,175,  103,174,  101,180,  99,183,  101,185,  98,187,  99,193,  102,194,  101,196,  72,198,  67,200,

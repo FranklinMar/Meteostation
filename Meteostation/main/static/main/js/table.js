@@ -17,7 +17,7 @@ show.change_show = function (from, to, entries, filter=null) {
 
 let page = 0;
 let entry_num = 10;
-let rows_tr = document.querySelectorAll("tbody tr");
+let rows_tr = document.querySelectorAll("tbody tr.filler")//document.querySelectorAll("tbody tr");
 
 
 function hideRows() {
@@ -35,7 +35,13 @@ function hideRows() {
 
 function check() {
     //rows_tr = document.querySelectorAll("tbody tr");
-    if (rows_tr.length === 0) {
+    let array = document.querySelectorAll("tbody tr.filler")
+    if (document.querySelectorAll("tbody tr:not(.filler)").length === 0) {
+        let array = document.querySelectorAll("tbody tr.filler");
+        console.log("What?");
+        for (let i = 0; i < array.length; i++) {
+            array[i].parentNode.removeChild(array[i]);
+        }
         let row = document.createElement("tr");
         data_table.getElementsByTagName('tbody')[0].appendChild(row);
         row.classList.add("filler");

@@ -48,7 +48,7 @@ class Data(models.Model):
 
 class Region(models.Model):
     name = models.CharField('Область', max_length=20, unique=True, null=True)
-    coords = models.TextField('Координати мапи', max_length=1000, null=False, default='')
+    coords = models.TextField('Координати мапи', max_length=4000, null=False, default='')
     datas = models.ManyToManyField(Data, blank=True)
     offset_x = models.FloatField('Відступ X', default=0, null=False)
     offset_y = models.FloatField('Відступ Y', default=0, null=False)
