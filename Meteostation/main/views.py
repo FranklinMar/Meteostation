@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+
 from .models import Direction
 from .models import Data
 from .models import Region
@@ -10,6 +12,7 @@ from django.db import IntegrityError
 from django.views.decorators.cache import never_cache
 # from django.http import HttpResponse
 
+from django.core.paginator import Paginator
 from datetime import datetime
 
 from pathlib import Path
@@ -107,7 +110,29 @@ def table(request, name=None):
         form = UploadFileForm()
     params["form"] = form
     params["name"] = name
-    params["data"] = Region.objects.get(name__exact=name).datas.all() if name else None  # Data.objects.all()  # [0:70]
+    page_number = request.GET.get("page", 1)
+    limit = request.GET.get("limit", 10)
+    order = "-" if request.GET.get("order", "") == "desc" else ""
+    sort = order + request.GET.get("sort", "date")
+
+    try:
+        region_data = Region.objects.get(name__exact=name).datas.order_by(sort).all()
+        # region_data = Region.objects.get(name__exact=name).datas.all()
+    except ObjectDoesNotExist:
+        region_data = None
+    # print(type(Region.objects.get(name__exact=name).datas.all()).__name__)
+    paginator = Paginator(region_data, per_page=limit)
+    # print(paginator.get_page(page_number))
+    try:
+        params["page_obj"] = paginator.get_page(page_number)  # Data.objects.all()  # [0:70]
+    except TypeError:
+        params["page_obj"] = None
+    # print(type(params["page_obj"].object_list).__name__)
+    # params["data"] = paginator.get_page(page_number).object_list
+    # print(type(paginator.get_page(page_number).object_list).__name__)
+    # print(params["data"])
+    # print(params["data"][0].__dict__)
+    # print(params["page_obj"].__dict__)
     # lviv = Region.objects.get(name="Lviv")
     # lviv.offset_y = -10
     # lviv.save()

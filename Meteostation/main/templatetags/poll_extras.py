@@ -18,6 +18,11 @@ def modify(dictionary, string):
     return newstr
 
 
+# @register.filter
+# def get_name(value):
+#     return value.__name__
+
+
 @register.simple_tag
 def replace(string, regex, replacement):
     return re.sub(regex, replacement, string)
