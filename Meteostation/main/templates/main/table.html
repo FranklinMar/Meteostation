@@ -8,17 +8,14 @@
     <link rel="stylesheet" href="{% static 'main/css/table.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/upload.css' %}">
     <script>
-function popUp(bool=false) {
-    if (bool) {
-        $("#fade").fadeIn();
-    } else {
-        $("#fade").fadeOut();
-    }
-}
+        function popUp(bool=false) {
+            if (bool) {
+                $("#fade").fadeIn();
+            } else {
+                $("#fade").fadeOut();
+            }
+        }
     </script>
-    <style>
-
-    </style>
 {% endblock %}
 
 {% block body %}

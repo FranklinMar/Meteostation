@@ -111,21 +111,23 @@ def table(request, name=None):
     params["form"] = form
     params["name"] = name
     page_number = request.GET.get("page", 1)
-    limit = request.GET.get("limit", 10)
-    order = "-" if request.GET.get("order", "") == "desc" else ""
+    order = request.GET.get("order", "").replace("desc", "-").replace("asc", "")
     sort = order + request.GET.get("sort", "date")
+    limit = request.GET.get("limit", 10)
+    # limit = limit if isinstance(page_number, int) and isinstance(limit, int) else None
 
     try:
         region_data = Region.objects.get(name__exact=name).datas.order_by(sort).all()
         # region_data = Region.objects.get(name__exact=name).datas.all()
     except ObjectDoesNotExist:
         region_data = None
-    # print(type(Region.objects.get(name__exact=name).datas.all()).__name__)
-    paginator = Paginator(region_data, per_page=limit)
-    # print(paginator.get_page(page_number))
+
     try:
+        # print(type(Region.objects.get(name__exact=name).datas.all()).__name__)
+        paginator = Paginator(region_data, per_page=limit)
+        # print(paginator.get_page(page_number))
         params["page_obj"] = paginator.get_page(page_number)  # Data.objects.all()  # [0:70]
-    except TypeError:
+    except (TypeError, ValueError):
         params["page_obj"] = None
     # print(type(params["page_obj"].object_list).__name__)
     # params["data"] = paginator.get_page(page_number).object_list

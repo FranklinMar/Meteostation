@@ -4,9 +4,13 @@ let limit = parsedUrl.searchParams.get("limit"),
     sort = parsedUrl.searchParams.get("sort"),
     order = parsedUrl.searchParams.get("order"),
     page = parsedUrl.searchParams.get("page");
-if (limit != null) {
+
+if (page === "null" || page < 0) {
+    page = 1;
+}
+if (limit != null && Number(limit)) {
     entries.selectedIndex = Array.from(document.querySelectorAll("#entries option"))
-        .findIndex(option => option.value === parsedUrl.searchParams.get("limit"));
+        .findIndex(option => option.value === limit);
 }
 limit = entries.options[entries.selectedIndex].value;
 if (parsedUrl.searchParams.get("limit") == null) {
