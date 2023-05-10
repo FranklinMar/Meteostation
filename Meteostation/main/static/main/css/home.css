@@ -1,0 +1,126 @@
+.main {
+    padding: 90px 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*padding: 0;*/
+    /*height: calc(100vh - 240px);
+    min-height: 100%;*/
+    /*height: 100%;*/
+    height: calc(100% - 240px);
+    gap: 12px;
+}
+
+.main .content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    gap: 30px;
+
+    max-width: 1280px;
+    width: 100%;
+    min-height: 300px;
+    height: fit-content;
+
+    background: linear-gradient(180deg, #ECE4D9 0%, #6384A2 100%);
+    border-radius: 20px;
+}
+
+.main .content .image {
+    max-width: 200px;
+    object-fit: contain;
+}
+
+.main .content .column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /*gap: 20px;*/
+
+    /*width: 950px;*/
+    /*height: 200px;*/
+    align-self: stretch;
+}
+
+.main .content .column h1 {
+    font-weight: 700;
+    font-size: 32px;
+    /*line-height: 42px;*/
+    /* identical to box height */
+    color: #FFFFFF;
+}
+
+.main .content .column p {
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 14px;
+    /*line-height: 21px;*/
+    /*letter-spacing: -0.1em;*/
+
+    color: #FFFFFF;
+    align-self: stretch;
+}
+
+.main .content .column .button {
+    margin-top: auto/*20px*/;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 10px;
+    gap: 15px;
+
+    max-width: 108px;
+    max-height: 44px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
+    background: #314C6F;
+    border-radius: 10px;
+}
+
+.main .content .column .button p {
+    margin: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    /*line-height: 24px;*/
+    /* identical to box height */
+    /*letter-spacing: -0.1em;*/
+    color: #FFFFFF;
+}
+
+.main .content .column .button img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.main .select {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    gap: 10px;
+}
+
+.main .select svg {
+    cursor: pointer;
+    object-fit: contain;
+    width: 20px;
+    height: 20px;
+    border-radius: 24px;
+    background: #6384A2;
+}
+
+.main .select svg.active {
+    transition: 0.3s linear;
+    width: 24px;
+    height: 24px;
+    background: #1F3C5C;
+}
