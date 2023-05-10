@@ -3,7 +3,9 @@
 
 {% block head %}
     <title>Data</title>
-    <link rel="stylesheet" href="{% static 'main/css/upload.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/data.css' %}">
+    {% comment %}<link rel="stylesheet" href="{% static 'main/css/upload.css' %}">{% endcomment %}
     <style>
     /*body > img {
         width: 100%;
@@ -84,12 +86,25 @@ function popUp(bool=false) {
     </form>
   </div>
 </div>{% endcomment %}
+<div class="container">
+    <div class="toggle">
 
+        <input type="radio" id="choice1" name="choice"
+               value="raw">
+        <label for="choice1">Raw data</label>
+
+        <input type="radio" id="choice2" name="choice"
+               value="interpolated">
+        <label for="choice2">Interpolated</label>
+
+        <div id="flap"><span class="content">productive</span></div>
+    </div>
+</div>
 <div class="map">
   <map name="ukraine">
       {% if regions %}
       {% for region in regions %}
-      <area shape="poly" title="{{ region.name }}" href="{% url 'data-table' region.name %}"
+      <area shape="poly" title="{{ region.name }}" href="{% url 'data-table-interpolated' region.name %}"
             coords="{{ region.coords }}" data-offset-x="{{ region.offset_x }}"
             data-offset-y="{{ region.offset_y }}">
       {% endfor %}
@@ -119,11 +134,13 @@ function popUp(bool=false) {
   </map>
   <img src="{% static 'main/img/ukraine.png' %}" alt="Ukraine" usemap="#ukraine"> <!--  class="margin-center"-->
 </div>
-<script src="{% static 'main/js/popup.js' %}"></script>
+{% comment %}<script src="{% static 'main/js/popup.js' %}"></script>{% endcomment %}
+<script src="{% static 'main/js/data.js' %}"></script>
+{% comment %}<script src="{% static 'main/js/imagemap.js' %}"></script>{% endcomment %}
 <script src="https://projects.davidlynch.org/maphilight/jquery.maphilight.js"></script>
 <script>
 $('img[usemap]').maphilight({fill: true, fillOpacity: 0.25, fillColor: '000000', fade: true, strokeColor: '1F3C5C',
-    strokeWidth: 3, shadow: true{% comment %}, shadowColor: 'FFFFFF'{% endcomment %}});
+    strokeWidth: 3, shadow: true/*, shadowColor: 'FFFFFF'*/});
 $('area').each(function(){
     let title = $(this).attr('title');
     let coords = $(this).attr('coords').split("  ");
@@ -162,6 +179,10 @@ $('area').each(function(){
 });
 $('area').mouseout(function() {
     $('.map span[data-title="' + $(this).attr('title') + '"]').css({color:'#000000'});
+});*/
+/*document.querySelectorAll('input[type="radio"]')
+    .forEach(input => input.onclick = function () {
+        Areas.forEach(area => Inputs.forEach(Input => area.href.replace(Input.value, this.value)));
 });*/
 </script>
 

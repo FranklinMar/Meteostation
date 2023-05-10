@@ -6,5 +6,6 @@ urlpatterns = [
     path('table', views.table, name='table'),
     path('data', views.data, name='data'),
     # path('data/<slug:name>', views.TableView.as_view(), name='data-table')
-    path('data/<str:name>', views.table, name='data-table')
+    path('data/raw/<str:name>', views.table, name='data-table-raw'),
+    path('data/interpolated/<str:name>', views.table, name='data-table-interpolated')
 ]

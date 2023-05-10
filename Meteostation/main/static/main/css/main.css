@@ -3,6 +3,7 @@
 /*p, h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }*/
+
 *,
 *::after,
 *::before {
@@ -15,12 +16,19 @@
 }
 
 body, html {
+  --Blue-Navbar: #314C6F;
+  --DarkBlue: #1F3C5C;
+  --White: #FFFFFF;
+  --Black: #000000;
+  --Background: #F9F4E8;
+  --Icon-Background: #ECE4D9;
   /*background: #F8F8F7;*/
-  background: #F9F4E8;
+  background: var(--Icon-Background);
   /*height: 100%;*/
   width: 100%;
   /*min-height: 100vh;*/
   /*min-width: 100vw;*/
+  height: 100vh;
   min-width: 100%;
 }
 
@@ -48,7 +56,7 @@ nav {
   right: 0;
   top: 0;
 
-  background: #314C6F;
+  background: var(--Blue-Navbar);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
@@ -76,7 +84,7 @@ nav .item span {
   font-size: 20px;
   /*line-height: 26px;*/
   /* identical to box height */
-  color: #FFFFFF;
+  color: var(--White);
 }
 
 nav .menu {
@@ -133,7 +141,7 @@ footer .column:last-child {
 footer .column h6 {
   font-weight: 700;
   font-size: 18px;
-  color: #000000;
+  color: var(--Black);
 }
 
 footer .column .grid {
@@ -156,18 +164,18 @@ footer .column .grid .icon {
   height: 40px;
   object-fit: contain;
 
-  background: #ECE4D9;
+  background: var(--Icon-Background);
   border-radius: 10px;
 }
 
 footer .column .grid .icon:hover svg {
   transition: 0.3s linear;
-  fill: #FFFFFF;
+  fill: var(--White);
 }
 
 footer .column .grid .icon:hover path {
   transition: 0.3s linear;
-  fill: #FFFFFF;
+  fill: var(--White);
 }
 
 footer .column select {
@@ -181,7 +189,7 @@ footer .column select {
   -moz-appearance: none;
   appearance: none;
   border: none;
-  background: #ECE4D9 url(../img/arrowdown.svg) calc(100% - 10px) no-repeat;
+  background: var(--Icon-Background) url(../img/arrowdown.svg) calc(100% - 10px) no-repeat;
   border-radius: 10px;
   height: 100%;
   width: calc(100% + 30px);
