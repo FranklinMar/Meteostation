@@ -1,8 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 
-from .models import Direction
-from .models import Data
-from .models import Region
+from .models import *
 from .forms import UploadFileForm
 
 from django.core.files.storage import FileSystemStorage
@@ -29,6 +27,7 @@ import pandas as pd
 #     slug_url_kwarg = 'name'
 
 
+@never_cache
 def home(request):
     # objects = Data.objects.all()
     # pass
@@ -63,7 +62,7 @@ def create_obj(row, filename, region_data):
 
     velocity = 0 if f"{row[4]}" == "nan" else int(row[4])
     code = "CL" if f"{row[5]}" == "nan" else row[5]
-    clouds = None if f"{row[6]}" == "nan" else int(row[6])
+    clouds = 0 if f"{row[6]}" == "nan" else int(row[6])
     visibility = float(f"{row[7].day}.{row[7].month}" if type(row[7]).__name__ == "datetime" else row[7])
     humidity = 0 if f"{row[8]}" == "nan" else int(row[8])
     pressure = None if f"{row[9]}" == "nan" else int(row[9])
@@ -81,6 +80,9 @@ def create_obj(row, filename, region_data):
 @never_cache
 # def table(request):
 def table(request, name=None):
+    # for i in Data.objects.all():
+    #     i.cloud_amount = 0 if not i.cloud_amount else i.cloud_amount
+    #     i.save()
     params = {}
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
@@ -173,12 +175,26 @@ def table(request, name=None):
         "HL": "Hail",
         "+": " and "
     }
+    # print(Interpolations.interpolations())
+    # print(Interpolations(region_data).lagrange(region_data[0].date))
     return render(request, "main/table.html", params)
 
 
 # def regions(request):
 #     return render(request, "main/data.html", {regions: Region.objects.all()})
 
+@never_cache
+def interpolations(request, name=None):
+    params = {"name": name}
+    try:
+        region_data = Region.objects.get(name__exact=name).datas.first()
+        # region_data = Region.objects.get(name__exact=name).datas.all()
+    except ObjectDoesNotExist:
+        region_data = None
+    functions = Interpolations(region_data)
+
+    params["interpolations"] = [method.capitalize() for method in functions.interpolations]
+    return render(request, "main/interpolations.html", params)
 
 @never_cache
 def data(request):

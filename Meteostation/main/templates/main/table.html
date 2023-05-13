@@ -126,8 +126,8 @@
         {% csrf_token %}
         {{ form.file }}
         {% comment %}{% csrf_token %}
-        <input id="file" type="file" name="upload" accept=".xlsx, .csv, .txt" style="display: contents;"/><!--  directory multiple accept=".xlsx, .csv, .txt" webkitdirectory -->
-        {% endcomment %}<p><span>Drag here</span> your file or <span>Click here</span> to upload</p>
+        <input id="file" type="file" name="upload" accept=".xlsx, .csv, .txt" style="display: contents;"/><!--  directory multiple accept=".xlsx, .csv, .txt" webkitdirectory -->{% endcomment %}
+        <p><span>Drag here</span> your file or <span>Click here</span> to upload</p>
       </label>
       <p id="label">No file selected</p>
       <button type="submit" style="display: none; align-self: center" id="submit" class="button"><span>UPLOAD</span></button>

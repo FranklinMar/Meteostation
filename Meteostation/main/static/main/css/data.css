@@ -17,6 +17,7 @@
 }*/
 
 .container {
+    user-select: none;
     perspective: 800px;
     display: flex;
     justify-content: center;
@@ -24,6 +25,7 @@
 }
 
 .toggle {
+    user-select: none;
     position: relative;
     border: solid var(--border-width) var(--accent);
     border-radius: var(--border-radius);
@@ -49,6 +51,7 @@
 }
 
 .toggle>label {
+    user-select: none;
     display: inline-block;
     min-width: 170px;
     padding: 15px;
@@ -60,11 +63,13 @@
 
 .toggle>label,
 .toggle>#flap {
+    user-select: none;
     font-weight: bold;
     text-transform: capitalize;
 }
 
 .toggle>#flap {
+    user-select: none;
     position: absolute;
     top: calc( 0px - var(--border-width));
     left: 50%;
@@ -83,6 +88,7 @@
 }
 
 .toggle>#flap>.content {
+    user-select: none;
     color: var(--White)/*#333*/;
     transition: transform 0s linear .25s;
     transform-style: preserve-3d;

@@ -15,7 +15,7 @@ html, body{
     margin-right: 80px;*/
     /*margin-top: 50px;*/
     padding: 20px;
-    background: #FFFFFF;
+    background: var(--Background);
     border-radius: 45px;
     width: calc(100% - 160px);
 }
@@ -166,7 +166,7 @@ tbody tr {
 }
 
 tbody tr:nth-child(even) {
-    background: var(--Background);
+    background: var(--Icon-Background);
 }
 
 tbody tr:hover {
@@ -290,7 +290,7 @@ select:hover, select:focus {
 }
 
 .pagination a.active {
-    z-index: 3;
+    /*z-index: 3;*/
     color: #fff;
     background-color: #4e73df;
     border-color: #4e73df;
