@@ -5,6 +5,36 @@
     --border-radius: 55px;
     --font-size: 20px;
 }
+/*body > img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+map area {
+    border: darkblue 3px solid;
+}*/
+.map {
+    margin: 50px auto 0 auto;
+    /*object-fit: contain;
+    width: 100%;
+    height: auto;*/
+    width: fit-content;
+    height: fit-content;
+    padding: 0 80px;
+    position: relative;
+}
+.map_title {
+    position: absolute;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.map map:hover area {
+    outline: 1px darkblue solid;
+}
 
 /*body {
     height: 100vh;
@@ -92,4 +122,65 @@
     color: var(--White)/*#333*/;
     transition: transform 0s linear .25s;
     transform-style: preserve-3d;
+}
+
+.menu-slide-in {
+  position: absolute;
+  top: 0;
+  left: -20%;
+  z-index: 1;
+  color: var(--White);
+  background: rgba(0, 0, 139, 0.7);
+  -webkit-clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+          clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+  width: 20%;
+  min-height: fit-content;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 300ms left cubic-bezier(0.77, 0, 0.175, 1);
+}
+@media only screen and (max-width: 600px) {
+  .menu-slide-in {
+    width: 250px;
+    left: -250px;
+    padding: 50px;
+  }
+}
+
+.menu-slide-in h1 {
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+.menu-slide-in.active {
+  left: 0;
+}
+
+.menu-slide-in input[type="radio"] {
+    left: -100%;
+    position: absolute;
+}
+
+.menu-slide-in label {
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    min-height: fit-content;
+    user-select: none;
+}
+
+.menu-slide-in label span {
+  font-size: 1.4rem;
+  padding:0.25rem 1rem;
+  /*margin-bottom: 1.5rem;*/
+  transition: ease-in-out 0.2s;
+}
+
+.menu-slide-in input[type="radio"]:checked + span {
+    background: var(--White);
+    color: darkblue;
+    font-size: 1.8rem
 }

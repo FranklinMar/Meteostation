@@ -198,7 +198,8 @@ def interpolations(request, name=None):
 
 @never_cache
 def data(request):
-    return render(request, "main/data.html", {"regions": Region.objects.all()})
+    return render(request, "main/data.html", {"regions": Region.objects.all(),
+                                              "interpolations": Interpolations.interpolations()})
     # params = {}
     # if request.method == "POST":
     #     file = request.FILES.getlist('upload')

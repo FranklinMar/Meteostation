@@ -5,38 +5,6 @@
     <title>Data</title>
     <link rel="stylesheet" href="{% static 'main/css/data.css' %}">
     {% comment %}<link rel="stylesheet" href="{% static 'main/css/upload.css' %}">{% endcomment %}
-    <style>
-    /*body > img {
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-    }
-
-    map area {
-        border: darkblue 3px solid;
-    }*/
-    .map {
-        margin: 50px auto 0 auto;
-        /*object-fit: contain;
-        width: 100%;
-        height: auto;*/
-        width: fit-content;
-        height: fit-content;
-        padding: 0 80px;
-        position: relative;
-    }
-    .map_title {
-        position: absolute;
-        text-align: center;
-        font-size: 12px;
-        font-weight: 700;
-        color: #FFFFFF;
-    }
-
-    .map map:hover area {
-        outline: 1px darkblue solid;
-    }
-    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     {% comment %}<script>
 function popUp(bool=false) {
@@ -96,17 +64,17 @@ function popUp(bool=false) {
                value="interpolated">
         <label for="choice2">Interpolated</label>
 
-        <div id="flap"><span class="content">productive</span></div>
+        <div id="flap"><span class="content">Interpolated</span></div>
     </div>
 </div>
 <div class="map">
   <map name="ukraine">
       {% if regions %}
-      {% for region in regions %}
-      <area shape="poly" title="{{ region.name }}" href="{% url 'data-table-interpolated' region.name %}"
-            coords="{{ region.coords }}" data-offset-x="{{ region.offset_x }}"
-            data-offset-y="{{ region.offset_y }}">
-      {% endfor %}
+          {% for region in regions %}
+          <area shape="poly" title="{{ region.name }}" href="{% url 'data-table-interpolated' interpolations.0 region.name %}"
+                coords="{{ region.coords }}" data-offset-x="{{ region.offset_x }}"
+                data-offset-y="{{ region.offset_y }}">
+          {% endfor %}
       {% endif %}
       {% comment %}<area shape="poly" title="Odesa" href="#" coords=""  data-offset-x="" data-offset-y="">{% endcomment %}
       {% comment %}<area shape="poly" alt="Lviv" title="Lviv" href="#" onclick="alert('hello');" coords="96,103,  99,103,  101,106,
@@ -133,10 +101,22 @@ function popUp(bool=false) {
   </map>
   <img src="{% static 'main/img/ukraine.png' %}" alt="Ukraine" usemap="#ukraine"> <!--  class="margin-center"-->
 </div>
+<div class="menu-slide-in">
+  <h1>Interpolation<br> type</h1>
+  {% for interpolation in interpolations %}
+    <label>
+      <input type="radio" name="interpolation" value="{{ interpolation }}">
+      <span>{{ interpolation|title }}</span>
+    </label>
+  {% endfor %}
+</div>
+{{ interpolations|json_script }}
 {% comment %}<script src="{% static 'main/js/popup.js' %}"></script>{% endcomment %}
-<script src="{% static 'main/js/data.js' %}"></script>
+<script src="{% static 'main/js/data.js' %}">
+</script>
 {% comment %}<script src="{% static 'main/js/imagemap.js' %}"></script>{% endcomment %}
 <script src="https://projects.davidlynch.org/maphilight/jquery.maphilight.js"></script>
+
 <script>
 $('img[usemap]').maphilight({fill: true, fillOpacity: 0.25, fillColor: '000000', fade: true, strokeColor: '1F3C5C',
     strokeWidth: 3, shadow: true/*, shadowColor: 'FFFFFF'*/});
